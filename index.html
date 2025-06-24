@@ -6,13 +6,18 @@
   <title>ozee – Systems Engineer for Complex Workflows</title>
   <style>
     :root {
-      --primary: #e8f3e8; /* Light green-white */
-      --accent: #1F7D53; /* Vibrant green */
-      --accent-light: #255F38; /* Medium green */
-      --bg: #18230F; /* Dark green */
-      --bg-light: #27391C; /* Slightly lighter dark green */
-      --font-main: 'Courier New', Courier, monospace;
-      --transition: all 0.3s ease;
+      --bg: #1e1e1e; /* VS Code dark */
+      --bg-light: #252526; /* Slightly lighter */
+      --primary: #d4d4d4; /* VS Code text */
+      --accent: #4EC9B0; /* VS Code teal */
+      --accent-light: #6A9955; /* VS Code green */
+      --border: #3c3c3c;
+      --font-main: 'Consolas', 'Courier New', monospace;
+      --selection: #264F78; /* VS Code selection */
+    }
+    
+    ::selection {
+      background: var(--selection);
     }
     
     * {
@@ -27,129 +32,106 @@
       color: var(--primary);
       padding: 2rem;
       line-height: 1.6;
-      min-height: 100vh;
+      max-width: 900px;
+      margin: 0 auto;
     }
     
     header {
       text-align: center;
-      margin-bottom: 4rem;
-      animation: fadeIn 0.8s ease-out;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
     }
     
     header h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      letter-spacing: 2px;
+      font-size: 2.5rem;
       color: var(--accent);
       margin-bottom: 0.5rem;
+      font-weight: normal;
     }
     
     header p {
       font-size: 1.1rem;
-      color: #cbd5e1;
-      font-style: italic;
+      color: var(--accent-light);
       max-width: 600px;
       margin: 0 auto;
     }
     
     section {
-      max-width: 750px;
       margin: 0 auto 3rem;
-      background: var(--bg-light);
-      padding: 2rem;
-      border-left: 3px solid var(--accent);
-      border-radius: 0 4px 4px 0;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: var(--transition);
-    }
-    
-    section:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      padding: 0;
     }
     
     h2 {
       color: var(--accent);
       margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      font-size: 1.1rem;
-      letter-spacing: 1.5px;
-      position: relative;
-      display: inline-block;
-    }
-    
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 50px;
-      height: 2px;
-      background: var(--accent);
+      font-size: 1.2rem;
+      font-weight: normal;
+      letter-spacing: 0.5px;
     }
     
     ul {
       list-style: none;
-      padding-left: 1rem;
     }
     
     li {
       margin-bottom: 0.8rem;
       position: relative;
-      padding-left: 1.2rem;
+      padding-left: 1.5rem;
     }
     
     li::before {
-      content: '▹';
-      color: var(--accent);
+      content: '→';
+      color: var(--accent-light);
       position: absolute;
       left: 0;
+      font-weight: bold;
     }
     
     a {
-      color: var(--accent-light);
+      color: var(--accent);
       text-decoration: none;
-      border-bottom: 1px dashed var(--accent);
-      transition: var(--transition);
+      transition: opacity 0.2s;
     }
     
     a:hover {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
+      opacity: 0.8;
+      text-decoration: underline;
     }
     
     .project {
       margin-bottom: 2.5rem;
-      padding: 1.5rem;
-      background: rgba(24, 35, 15, 0.5);
-      border-radius: 4px;
+      position: relative;
+    }
+    
+    .project::before {
+      content: '//';
+      color: var(--accent-light);
+      position: absolute;
+      left: -1.5rem;
+      opacity: 0.6;
     }
     
     .project strong {
       color: var(--accent);
-      font-size: 1.1rem;
-    }
-    
-    .project a {
-      margin-left: 0.5rem;
-      font-size: 0.9rem;
+      font-weight: normal;
     }
     
     .quote {
       font-style: italic;
-      color: #94a3b8;
-      border-left: 2px solid var(--accent);
-      padding: 0.5rem 1rem;
+      color: #888;
+      padding: 1rem 0 0 1rem;
+      border-left: 1px solid var(--accent-light);
       margin: 1.5rem 0;
-      background: rgba(31, 125, 83, 0.05);
     }
     
     footer {
       text-align: center;
       font-size: 0.9rem;
-      color: #94a3b8;
+      color: #666;
       margin-top: 4rem;
       padding-top: 2rem;
-      border-top: 1px solid rgba(148, 163, 184, 0.1);
+      border-top: 1px solid var(--border);
     }
     
     /* Skills grid */
@@ -160,16 +142,14 @@
       margin-top: 1.5rem;
     }
     
-    .skills-grid ul {
-      background: rgba(39, 57, 28, 0.5);
-      padding: 1.5rem;
-      border-radius: 4px;
+    /* VS Code-like decorations */
+    .keyword {
+      color: var(--accent);
     }
     
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .comment {
+      color: #6A9955;
+      font-style: italic;
     }
     
     /* Responsive adjustments */
@@ -178,38 +158,24 @@
         padding: 1.5rem;
       }
       
-      section {
-        padding: 1.5rem;
-      }
-      
       .skills-grid {
         grid-template-columns: 1fr;
       }
-    }
-    
-    @media (max-width: 480px) {
-      body {
-        padding: 1rem;
-      }
       
-      header h1 {
-        font-size: 2.2rem;
-      }
-      
-      section {
-        padding: 1.2rem;
+      .project::before {
+        left: -1rem;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>ozee</h1>
-    <p>Backend engineer who builds systems that grow with your business</p>
+    <h1><span class="keyword">class</span> <span>ozee</span></h1>
+    <p><span class="comment">// Backend engineer who builds systems that grow with your business</span></p>
   </header>
 
   <section>
-    <h2>Why Work With Me?</h2>
+    <h2><span class="keyword">function</span> WhyWorkWithMe()</h2>
     <p>
       Most backend systems fail from <strong>overcomplication</strong> or <strong>inflexibility</strong>. I engineer the opposite:
     </p>
@@ -222,12 +188,12 @@
       <li><strong>Developer-friendly APIs</strong> - Frontend teams integrate faster with clear contracts</li>
     </ul>
     <div class="quote">
-      "The best backend code is invisible—it just works, even when requirements evolve."
+      <span class="comment">/* The best backend code is invisible—it just works, even when requirements evolve*/</span>
     </div>
   </section>
 
   <section>
-    <h2>Skills</h2>
+    <h2><span class="keyword">const</span> skills = [</h2>
     <div class="skills-grid">
       <ul>
         <li><strong>Workflow Automation</strong><br> Approval chains, status tracking, conditional logic and audit trails.</li>
@@ -238,38 +204,39 @@
         <li><strong>Data Modeling</strong><br> Balancing flexibility with query efficiency.</li>
       </ul>
     </div>
+    <h2>]</h2>
   </section>
     
   <section>
-    <h2>Projects as Proof</h2>
+    <h2><span class="keyword">interface</span> Projects</h2>
     <div class="project">
       <strong>HRMS Platform</strong> — <a href="https://github.com/ozee/hrms-lite" target="_blank">GitHub</a>
-      <p>A complete demonstration of scalable backend architecture:</p>
+      <p><span class="comment">// Scalable backend architecture</span></p>
         <ul>
-        <li><strong>Self-service approval system</strong> - Added new workflow types (documents, time-off) in under 4 hours each</li>
-        <li><strong>Dynamic permission core</strong> - Reduced role-related bugs by 70% through automated policy testing</li>
-        <li><strong>Contract automation</strong> - Enforced complex labor rules in code, eliminating spreadsheet errors</li>
-        <li><strong>Real-world stress-tested</strong> - Handled edge cases like delegation chains and expired approvals</li>
+            <li><strong>Self-service approval system</strong> - Added new workflow types (documents, time-off) in under 4 hours each</li>
+            <li><strong>Dynamic permission core</strong> - Reduced role-related bugs by 70% through automated policy testing</li>
+            <li><strong>Contract automation</strong> - Enforced complex labor rules in code, eliminating spreadsheet errors</li>
+            <li><strong>Real-world stress-tested</strong> - Handled edge cases like delegation chains and expired approvals</li>
         </ul>
     </div>
   </section>
 
   <section>
-    <h2>Let's Fix Your Pain Points</h2>
+    <h2><span class="keyword">export</span> Contact</h2>
     <p>
-      I'm currently available for:<br>
+      Available for:<br>
       <strong>→ Legacy system refactors</strong> (especially Laravel)<br>
       <strong>→ Custom workflow design</strong><br>
       <strong>→ "How do we even structure this?" projects</strong>
     </p>
-    <ul>
-      <li>Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
-      <li>GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/ozee</a></li>
+    <ul style="padding-left: 1rem;">
+      <li style="margin-bottom: 0.1rem;">Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
+      <li style="margin-bottom: 0.1rem;">GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/ozee</a></li>
     </ul>
   </section>
 
   <footer>
-    &copy; 2025 ozee – building quietly behind the scenes.
+    <span class="comment">/* © 2025 ozee – building quietly behind the scenes */</span>
   </footer>
 </body>
 </html>
