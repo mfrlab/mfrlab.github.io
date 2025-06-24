@@ -1,1 +1,275 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ozee – Systems Engineer for Complex Workflows</title>
+  <style>
+    :root {
+      --primary: #e8f3e8; /* Light green-white */
+      --accent: #1F7D53; /* Vibrant green */
+      --accent-light: #255F38; /* Medium green */
+      --bg: #18230F; /* Dark green */
+      --bg-light: #27391C; /* Slightly lighter dark green */
+      --font-main: 'Courier New', Courier, monospace;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg);
+      color: var(--primary);
+      padding: 2rem;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    header h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    section {
+      max-width: 750px;
+      margin: 0 auto 3rem;
+      background: var(--bg-light);
+      padding: 2rem;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+    
+    section:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    h2 {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--accent);
+    }
+    
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+    }
+    
+    li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 1.2rem;
+    }
+    
+    li::before {
+      content: '▹';
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+    }
+    
+    a {
+      color: var(--accent-light);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--accent);
+      transition: var(--transition);
+    }
+    
+    a:hover {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .project {
+      margin-bottom: 2.5rem;
+      padding: 1.5rem;
+      background: rgba(24, 35, 15, 0.5);
+      border-radius: 4px;
+    }
+    
+    .project strong {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    
+    .project a {
+      margin-left: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .quote {
+      font-style: italic;
+      color: #94a3b8;
+      border-left: 2px solid var(--accent);
+      padding: 0.5rem 1rem;
+      margin: 1.5rem 0;
+      background: rgba(31, 125, 83, 0.05);
+    }
+    
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    
+    /* Skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    
+    .skills-grid ul {
+      background: rgba(39, 57, 28, 0.5);
+      padding: 1.5rem;
+      border-radius: 4px;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
+      }
+      
+      section {
+        padding: 1.5rem;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      section {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ozee</h1>
+    <p>Backend engineer who builds systems that grow with your business</p>
+  </header>
+
+  <section>
+    <h2>Why Work With Me?</h2>
+    <p>
+      Most backend systems fail from <strong>overcomplication</strong> or <strong>inflexibility</strong>. I engineer the opposite:
+    </p>
+    <ul>
+      <li><strong>Future-proof workflow automation</strong> - Turn chaotic processes into self-maintaining systems so your team focuses on growth, not patching brittle code</li>
+      <li><strong>Technical debt prevention</strong> - Architectures that scale to 10x complexity without 10x developers</li>
+      <li><strong>Turn complex business rules into modular systems</strong> - Policies evolve? The code adapts without rewrites</li>
+      <li><strong>Self-scaling architectures</strong> - New departments, roles slot or workflows without rebuilds</li>
+      <li><strong>Legacy code surgery</strong> - Specialize in untangling undocumented systems</li>
+      <li><strong>Developer-friendly APIs</strong> - Frontend teams integrate faster with clear contracts</li>
+    </ul>
+    <div class="quote">
+      "The best backend code is invisible—it just works, even when requirements evolve."
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <ul>
+        <li><strong>Workflow Automation</strong><br> Approval chains, status tracking, conditional logic and audit trails.</li>
+        <li><strong>Access Control</strong><br> Role hierarchies, granular permissions, and policy enforcement.</li>
+      </ul>
+      <ul>
+        <li><strong>API Architecture</strong><br> RESTful design, validation layers, and clear documentation.</li>
+        <li><strong>Data Modeling</strong><br> Balancing flexibility with query efficiency.</li>
+      </ul>
+    </div>
+  </section>
+    
+  <section>
+    <h2>Projects as Proof</h2>
+    <div class="project">
+      <strong>HRMS Platform</strong> — <a href="https://github.com/ozee/hrms-lite" target="_blank">GitHub</a>
+      <p>A complete demonstration of scalable backend architecture:</p>
+        <ul>
+        <li><strong>Self-service approval system</strong> - Added new workflow types (documents, time-off) in under 4 hours each</li>
+        <li><strong>Dynamic permission core</strong> - Reduced role-related bugs by 70% through automated policy testing</li>
+        <li><strong>Contract automation</strong> - Enforced complex labor rules in code, eliminating spreadsheet errors</li>
+        <li><strong>Real-world stress-tested</strong> - Handled edge cases like delegation chains and expired approvals</li>
+        </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Let's Fix Your Pain Points</h2>
+    <p>
+      I'm currently available for:<br>
+      <strong>→ Legacy system refactors</strong> (especially Laravel)<br>
+      <strong>→ Custom workflow design</strong><br>
+      <strong>→ "How do we even structure this?" projects</strong>
+    </p>
+    <ul>
+      <li>Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
+      <li>GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/ozee</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    &copy; 2025 ozee – building quietly behind the scenes.
+  </footer>
+</body>
+</html>
