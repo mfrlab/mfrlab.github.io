@@ -3,29 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ozee – Systems Engineer for Complex Workflows</title>
+  <title>ozee – Backend Engineer · Workflow Systems & Enterprise APIs</title>
   <style>
     :root {
-      --bg: #1e1e1e; /* VS Code dark */
-      --bg-light: #252526; /* Slightly lighter */
-      --primary: #d4d4d4; /* VS Code text */
-      --accent: #4EC9B0; /* VS Code teal */
-      --accent-light: #6A9955; /* VS Code green */
+      --bg: #1e1e1e;
+      --bg-light: #252526;
+      --primary: #d4d4d4;
+      --accent: #4EC9B0;
+      --accent-light: #6A9955;
       --border: #3c3c3c;
       --font-main: 'Consolas', 'Courier New', monospace;
-      --selection: #264F78; /* VS Code selection */
+      --selection: #264F78;
     }
-    
-    ::selection {
-      background: var(--selection);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+
+    ::selection { background: var(--selection); }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: var(--font-main);
       background-color: var(--bg);
@@ -35,33 +29,33 @@
       max-width: 900px;
       margin: 0 auto;
     }
-    
+
     header {
       text-align: center;
       margin-bottom: 3rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--border);
     }
-    
+
     header h1 {
       font-size: 2.5rem;
       color: var(--accent);
       margin-bottom: 0.5rem;
       font-weight: normal;
     }
-    
+
     header p {
       font-size: 1.1rem;
       color: var(--accent-light);
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
     }
-    
+
     section {
       margin: 0 auto 3rem;
       padding: 0;
     }
-    
+
     h2 {
       color: var(--accent);
       margin-bottom: 1.5rem;
@@ -69,17 +63,15 @@
       font-weight: normal;
       letter-spacing: 0.5px;
     }
-    
-    ul {
-      list-style: none;
-    }
-    
+
+    ul { list-style: none; }
+
     li {
       margin-bottom: 0.8rem;
       position: relative;
       padding-left: 1.5rem;
     }
-    
+
     li::before {
       content: '→';
       color: var(--accent-light);
@@ -87,23 +79,23 @@
       left: 0;
       font-weight: bold;
     }
-    
+
     a {
       color: var(--accent);
       text-decoration: none;
       transition: opacity 0.2s;
     }
-    
+
     a:hover {
       opacity: 0.8;
       text-decoration: underline;
     }
-    
+
     .project {
       margin-bottom: 2.5rem;
       position: relative;
     }
-    
+
     .project::before {
       content: '//';
       color: var(--accent-light);
@@ -111,12 +103,12 @@
       left: -1.5rem;
       opacity: 0.6;
     }
-    
+
     .project strong {
       color: var(--accent);
       font-weight: normal;
     }
-    
+
     .quote {
       font-style: italic;
       color: #888;
@@ -124,7 +116,7 @@
       border-left: 1px solid var(--accent-light);
       margin: 1.5rem 0;
     }
-    
+
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -133,62 +125,60 @@
       padding-top: 2rem;
       border-top: 1px solid var(--border);
     }
-    
-    /* Skills grid */
+
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 2rem;
       margin-top: 1.5rem;
     }
-    
-    /* VS Code-like decorations */
-    .keyword {
-      color: var(--accent);
+
+    .stack-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
     }
-    
-    .comment {
-      color: #6A9955;
-      font-style: italic;
+
+    .badge {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      color: var(--accent-light);
+      font-size: 0.8rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 2px;
     }
-    
-    /* Responsive adjustments */
+
+    .keyword { color: var(--accent); }
+    .comment { color: #6A9955; font-style: italic; }
+
     @media (max-width: 768px) {
-      body {
-        padding: 1.5rem;
-      }
-      
-      .skills-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .project::before {
-        left: -1rem;
-      }
+      body { padding: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .project::before { left: -1rem; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1><span class="keyword">class</span> <span>ozee</span></h1>
-    <p><span class="comment">// Backend engineer who builds systems that grow with your business</span></p>
+    <p><span class="comment">// Backend engineer specializing in enterprise workflow systems — multi-tenant, multi-company, production-ready</span></p>
   </header>
 
   <section>
     <h2><span class="keyword">function</span> WhyWorkWithMe()</h2>
     <p>
-      Most backend systems fail from <strong>overcomplication</strong> or <strong>inflexibility</strong>. I engineer the opposite:
+      I build backend systems for organizations where the rules are <strong>complex</strong>, the data is <strong>sensitive</strong>, and the cost of getting it wrong is real.
     </p>
-    <ul>
-      <li><strong>Future-proof workflow automation</strong> - Turn chaotic processes into self-maintaining systems so your team focuses on growth, not patching brittle code</li>
-      <li><strong>Technical debt prevention</strong> - Architectures that scale to 10x complexity without 10x developers</li>
-      <li><strong>Turn complex business rules into modular systems</strong> - Policies evolve? The code adapts without rewrites</li>
-      <li><strong>Self-scaling architectures</strong> - New departments, roles slot or workflows without rebuilds</li>
-      <li><strong>Legacy code surgery</strong> - Specialize in untangling undocumented systems</li>
-      <li><strong>Developer-friendly APIs</strong> - Frontend teams integrate faster with clear contracts</li>
+    <ul style="margin-top: 1rem;">
+      <li><strong>Multi-tenant from the ground up</strong> — built systems that serve multiple companies, branches, and departments under one platform without bleeding data across tenants</li>
+      <li><strong>Workflow automation that reflects reality</strong> — approval chains, delegation, escalation, expired states — all modeled as first-class logic, not afterthoughts</li>
+      <li><strong>Complex domain → clean API</strong> — translated payroll rules, labor compliance, and org hierarchy into contracts that frontend teams can consume without guessing</li>
+      <li><strong>Scalable permission design</strong> — role hierarchies and granular access control that evolve as the org grows without requiring rewrites</li>
+      <li><strong>Legacy system surgery</strong> — untangle undocumented codebases and restore them to something maintainable</li>
     </ul>
     <div class="quote">
-      <span class="comment">/* The best backend code is invisible—it just works, even when requirements evolve*/</span>
+      <span class="comment">/* The best backend is the one that handles edge cases you forgot to spec — delegation chains, expired approvals, conflicting rules — silently and correctly */</span>
     </div>
   </section>
 
@@ -196,47 +186,70 @@
     <h2><span class="keyword">const</span> skills = [</h2>
     <div class="skills-grid">
       <ul>
-        <li><strong>Workflow Automation</strong><br> Approval chains, status tracking, conditional logic and audit trails.</li>
-        <li><strong>Access Control</strong><br> Role hierarchies, granular permissions, and policy enforcement.</li>
+        <li><strong>Workflow Automation</strong><br>Approval pipelines, conditional routing, audit trails, and status state machines</li>
+        <li><strong>Multi-Tenant Architecture</strong><br>Isolated data per company/branch with shared infrastructure and configurable policies</li>
+        <li><strong>Payroll & Compliance Domain</strong><br>Salary components, deductions, period locks, and labor rule enforcement in code</li>
       </ul>
       <ul>
-        <li><strong>API Architecture</strong><br> RESTful design, validation layers, and clear documentation.</li>
-        <li><strong>Data Modeling</strong><br> Balancing flexibility with query efficiency.</li>
+        <li><strong>API Architecture</strong><br>RESTful contracts, structured responses, versioning, and documentation that frontend teams actually use</li>
+        <li><strong>Access Control</strong><br>Dynamic role hierarchies, permission matrices, and policy enforcement at the route and resource level</li>
+        <li><strong>Data Modeling</strong><br>Normalized schemas that balance query efficiency with the flexibility complex business rules demand</li>
       </ul>
     </div>
-    <h2>]</h2>
+    <div class="stack-badges">
+      <span class="badge">PHP 8</span>
+      <span class="badge">Laravel</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">REST API</span>
+      <span class="badge">Sanctum / JWT</span>
+      <span class="badge">Eloquent ORM</span>
+      <span class="badge">Queue & Jobs</span>
+      <span class="badge">Node.js</span>
+    </div>
+    <h2 style="margin-top: 1.5rem;">]</h2>
   </section>
-    
+
   <section>
     <h2><span class="keyword">interface</span> Projects</h2>
+
     <div class="project">
-      <strong>HRMS Platform</strong> — <a href="https://github.com/ozee/hrms-lite" target="_blank">GitHub</a>
-      <p><span class="comment">// Scalable backend architecture</span></p>
-        <ul>
-            <li><strong>Self-service approval system</strong> - Added new workflow types (documents, time-off) in under 4 hours each</li>
-            <li><strong>Dynamic permission core</strong> - Reduced role-related bugs by 70% through automated policy testing</li>
-            <li><strong>Contract automation</strong> - Enforced complex labor rules in code, eliminating spreadsheet errors</li>
-            <li><strong>Real-world stress-tested</strong> - Handled edge cases like delegation chains and expired approvals</li>
-        </ul>
+      <strong>HRMS Platform</strong> — <span class="comment">// enterprise human resource management system</span>
+      <p style="margin-top: 0.5rem;">Full-featured HR system built for multi-company, multi-branch organizations. Dual-server architecture: dedicated REST API backend + separate frontend consumer.</p>
+      <ul style="margin-top: 0.8rem;">
+        <li><strong>Attendance & leave engine</strong> — real-time monitoring, periodic reporting, shift tracking, and leave quota enforcement per policy</li>
+        <li><strong>Approval workflow core</strong> — pluggable workflow types (leave, overtime, exit permit, documents) each added in under 4 hours thanks to modular design</li>
+        <li><strong>Payroll system</strong> — salary schema builder, component-level configuration, period locking, and compliance-enforced calculation</li>
+        <li><strong>Recruitment pipeline</strong> — job posting → applicant screening → candidate tracking in one flow</li>
+        <li><strong>Document management</strong> — employment contracts, warning letters, decisions — generated and archived per employee</li>
+        <li><strong>RBAC with 70% fewer role bugs</strong> — granular permission matrix with automated policy testing</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <strong>QOAP Middleware & Monitoring</strong> — <a href="https://github.com/mfrlab/qoap-middleware" target="_blank">github.com/mfrlab/qoap-middleware</a>
+      <p style="margin-top: 0.5rem;"><span class="comment">// request interception, transformation, and observability layer</span></p>
     </div>
   </section>
 
   <section>
     <h2><span class="keyword">export</span> Contact</h2>
-    <p>
-      Available for:<br>
-      <strong>→ Legacy system refactors</strong> (especially Laravel)<br>
-      <strong>→ Custom workflow design</strong><br>
-      <strong>→ "How do we even structure this?" projects</strong>
+    <p style="margin-bottom: 1rem;">
+      Open to remote work. Available for:
     </p>
-    <ul style="padding-left: 1rem;">
-      <li style="margin-bottom: 0.1rem;">Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
-      <li style="margin-bottom: 0.1rem;">GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/ozee</a></li>
+    <ul style="padding-left: 0;">
+      <li><strong>Greenfield enterprise backend</strong> — HR, ERP, operations, or any domain with complex rules</li>
+      <li><strong>Legacy system rescue</strong> — especially Laravel monoliths that grew faster than their architecture</li>
+      <li><strong>API design & contract definition</strong> — for teams where frontend and backend move independently</li>
+      <li><strong>"How do we even structure this?" consulting</strong> — architecture sessions before the first line of code</li>
+    </ul>
+    <ul style="padding-left: 1rem; margin-top: 1.2rem;">
+      <li style="margin-bottom: 0.3rem;">Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
+      <li style="margin-bottom: 0.3rem;">GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/mfrlab</a></li>
     </ul>
   </section>
 
   <footer>
-    <span class="comment">/* © 2025 ozee – building quietly behind the scenes */</span>
+    <span class="comment">/* © 2025 ozee – remote-friendly · backend-first · building quietly behind the scenes */</span>
   </footer>
 </body>
 </html>
