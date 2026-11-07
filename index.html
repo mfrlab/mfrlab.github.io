@@ -1,255 +1,858 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ozee – Backend Engineer · Workflow Systems & Enterprise APIs</title>
-  <style>
-    :root {
-      --bg: #1e1e1e;
-      --bg-light: #252526;
-      --primary: #d4d4d4;
-      --accent: #4EC9B0;
-      --accent-light: #6A9955;
-      --border: #3c3c3c;
-      --font-main: 'Consolas', 'Courier New', monospace;
-      --selection: #264F78;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ozee — Product Engineer</title>
+<meta name="description" content="Backend-first product engineer for business systems: HR & payroll, import compliance, ERP reporting, logistics, messaging gateways. Laravel, Vue, Node. Built with AI in the loop.">
+<meta property="og:title" content="ozee — Backend-first Product Engineer">
+<meta property="og:description" content="I build the part of your software where the business rules live.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317160F'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23FF6B3D' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F1EC; --surface:#FBFAF7; --ink:#17160F; --muted:#6C685E; --line:#DCD7CC;
+  --accent:#D9481C; --ok:#2E7A4C; --warn:#A86E12; --bad:#BE3328;
+  --term:#16150F; --term-ink:#E8E4D9; --term-muted:#8A867B; --term-line:#2B2A24;
+  --sans:'Geist',system-ui,-apple-system,sans-serif;
+  --mono:'Geist Mono',ui-monospace,Menlo,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E0E0C; --surface:#161613; --ink:#ECE9E1; --muted:#9A968B; --line:#2A2924;
+    --accent:#FF6B3D; --ok:#56B57F; --warn:#E2A64B; --bad:#F06455;
+    --term:#121210; --term-line:#2A2924;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E0E0C; --surface:#161613; --ink:#ECE9E1; --muted:#9A968B; --line:#2A2924;
+  --accent:#FF6B3D; --ok:#56B57F; --warn:#E2A64B; --bad:#F06455;
+  --term:#121210; --term-line:#2A2924;
+}
 
-    ::selection { background: var(--selection); }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .4s,color .4s}
+::selection{background:var(--accent);color:#fff}
+a{color:inherit}
+button{font-family:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--accent);font-weight:500}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-bottom-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:var(--mono);font-weight:500;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:9px;height:9px;border-radius:50%;background:var(--ok);animation:ping 2.4s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent)}80%,100%{box-shadow:0 0 0 9px transparent}}
+.nav-r{display:flex;align-items:center;gap:28px}
+.nav-r a{font-size:14px;text-decoration:none;color:var(--muted);position:relative;transition:color .2s}
+.nav-r a:hover{color:var(--ink)}
+.nav-r a::after{content:'';position:absolute;left:0;bottom:-3px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+.nav-r a:hover::after{transform:scaleX(1);transform-origin:left}
+.theme{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:transform .5s var(--ease),border-color .2s}
+.theme:hover{border-color:var(--ink);transform:rotate(40deg)}
+.theme svg{width:15px;height:15px}
+@media (max-width:720px){.nav-r a{display:none}}
 
-    body {
-      font-family: var(--font-main);
-      background-color: var(--bg);
-      color: var(--primary);
-      padding: 2rem;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: 0 auto;
-    }
+/* ---------- hero ---------- */
+.hero{position:relative;padding:96px 0 88px}
+.hero::before{content:'';position:absolute;inset:0;z-index:-1;
+  background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 30% 40%,#000 20%,transparent 75%);
+          mask-image:radial-gradient(ellipse 70% 60% at 30% 40%,#000 20%,transparent 75%)}
+.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.4vw,84px);line-height:.98;letter-spacing:-.015em;margin:22px 0 28px}
+h1 em{font-style:italic;color:var(--accent)}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w>span,.w>em{display:inline-block;transform:translateY(105%);animation:rise .9s var(--ease) forwards;animation-delay:calc(var(--i) * 45ms + 150ms)}
+@keyframes rise{to{transform:none}}
+.lede{font-size:18px;color:var(--muted);max-width:540px}
+.lede strong{color:var(--ink);font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font-size:15px;font-weight:500;text-decoration:none;cursor:pointer;border:1px solid var(--ink);transition:transform .25s var(--ease),background .2s,color .2s,border-color .2s}
+.btn-solid{background:var(--ink);color:var(--bg)}
+.btn-solid:hover:not(:disabled){background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-ghost{background:none;color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--bg)}
+.btn:active{transform:scale(.97)}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateY(3px)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:40px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.meta span::before{content:'— ';color:var(--line)}
+.fade-up{opacity:0;transform:translateY(14px);animation:fu .9s var(--ease) forwards}
+@keyframes fu{to{opacity:1;transform:none}}
 
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-    }
+/* event stream */
+.stream{background:var(--term);color:var(--term-ink);border-radius:14px;border:1px solid var(--term-line);
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.45);overflow:hidden;font-family:var(--mono);font-size:12.5px}
+.stream-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--term-line);color:var(--term-muted)}
+.stream-h .live{display:flex;align-items:center;gap:8px;color:var(--term-ink)}
+.stream-h .live i{width:7px;height:7px;border-radius:50%;background:#56B57F;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.stream-b{height:330px;padding:14px 16px;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 35%);mask-image:linear-gradient(to bottom,transparent,#000 35%)}
+.ev{display:grid;grid-template-columns:84px auto 1fr;gap:10px;animation:evin .5s var(--ease)}
+@keyframes evin{from{opacity:0;transform:translateY(8px)}}
+.ev .sys{color:var(--term-muted)}
+.ev .k{white-space:nowrap}
+.ev .m{color:var(--term-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.k.info{color:#9CC3E6}.k.ok{color:#6FCF97}.k.warn{color:#F2B759}.k.bad{color:#FF7B6E}.k.muted{color:var(--term-muted)}
+.stream-f{padding:10px 16px;border-top:1px solid var(--term-line);color:var(--term-muted);font-size:11.5px}
 
-    header h1 {
-      font-size: 2.5rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-      font-weight: normal;
-    }
+/* ---------- sections ---------- */
+section{padding:110px 0;border-top:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:220px 1fr;gap:40px;margin-bottom:56px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.4vw,56px);line-height:1.04;letter-spacing:-.01em;max-width:780px}
+h2 em{font-style:italic;color:var(--accent)}
+.sec-head p{color:var(--muted);margin-top:18px;max-width:620px;font-size:17px}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr;gap:14px}}
 
-    header p {
-      font-size: 1.1rem;
-      color: var(--accent-light);
-      max-width: 650px;
-      margin: 0 auto;
-    }
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
 
-    section {
-      margin: 0 auto 3rem;
-      padding: 0;
-    }
+/* proof */
+.proof{padding:0}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:40px 28px 40px 0;border-right:1px solid var(--line)}
+.stat+.stat{padding-left:28px}
+.stat:last-child{border-right:none}
+.stat .n{font-family:var(--serif);font-size:54px;line-height:1;letter-spacing:-.02em}
+.stat .n small{font-size:.5em;color:var(--muted);margin-left:2px}
+.stat p{font-size:14px;color:var(--muted);margin-top:12px;max-width:230px}
+@media (max-width:860px){.proof-grid{grid-template-columns:1fr 1fr}.stat{padding:30px 18px 30px 0!important}.stat:nth-child(2n){border-right:none;padding-left:18px!important}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
-    h2 {
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      font-size: 1.2rem;
-      font-weight: normal;
-      letter-spacing: 0.5px;
-    }
+/* ---------- demo: rule engine ---------- */
+.demo{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.demo-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;transition:all .2s}
+.tab:hover:not(:disabled){color:var(--ink);border-color:var(--ink)}
+.tab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.tab:disabled{cursor:not-allowed;opacity:.5}
+.run{height:42px;font-size:14px}
+.run:disabled{opacity:.45;cursor:not-allowed}
+.scn-desc{padding:16px 22px;color:var(--muted);font-size:14.5px;border-bottom:1px solid var(--line)}
+.scn-desc b{color:var(--ink);font-weight:500}
 
-    ul { list-style: none; }
+.rx{display:grid;grid-template-columns:1.3fr 1fr}
+.docs{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:22px;align-content:start}
+.doc{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:14px 14px 10px;font-family:var(--mono);font-size:11.5px;position:relative;overflow:hidden}
+.doc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--line)}
+.doc h4{font-family:var(--sans);font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:8px}
+.doc h4 span{font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:400;text-align:right}
+.f{display:flex;justify-content:space-between;gap:10px;padding:3px 6px;margin:0 -6px;border-radius:5px;transition:background .3s,box-shadow .3s,color .3s}
+.f>span:first-child{color:var(--muted);flex:none}
+.f>span:last-child{text-align:right;overflow-wrap:anywhere}
+.f.scan{box-shadow:inset 0 0 0 1px var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.f.bad{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.f.warn{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+.f.bad>span:first-child,.f.warn>span:first-child{color:inherit;opacity:.8}
 
-    li {
-      margin-bottom: 0.8rem;
-      position: relative;
-      padding-left: 1.5rem;
-    }
+.rules{border-left:1px solid var(--line);padding:18px 22px 22px;display:flex;flex-direction:column}
+.rules .eyebrow{margin-bottom:8px}
+.rule{display:grid;grid-template-columns:22px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);transition:opacity .3s}
+.rule .ic{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff;margin-top:2px;transition:all .3s}
+.rule .ic svg{width:11px;height:11px;display:none}
+.rule .rt{font-size:14px;font-weight:500;line-height:1.35}
+.rule .rm{font-family:var(--mono);font-size:11.5px;color:var(--muted);min-height:17px}
+.rule.run .ic{border-color:var(--accent);animation:pulse 1.1s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}100%{box-shadow:0 0 0 10px transparent}}
+.rule.pass .ic{background:var(--ok);border-color:var(--ok)}
+.rule.warn .ic{background:var(--warn);border-color:var(--warn)}
+.rule.fail .ic{background:var(--bad);border-color:var(--bad)}
+.rule.pass .i-ok,.rule.warn .i-warn,.rule.fail .i-x{display:block}
+.rule.warn .rm{color:var(--warn)}.rule.fail .rm{color:var(--bad)}
+.verdict{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.verdict .big{font-family:var(--serif);font-size:34px;line-height:1.05}
+.verdict p{font-size:13.5px;color:var(--muted);margin-top:6px}
+.verdict.ok .big{color:var(--ok)}.verdict.bad .big{color:var(--bad)}.verdict.wait .big{color:var(--accent)}
+.demo-note{font-size:13px;color:var(--muted);margin-top:16px;font-family:var(--mono);max-width:820px}
+@media (max-width:900px){.rx{grid-template-columns:1fr}.rules{border-left:none;border-top:1px solid var(--line)}}
+@media (max-width:560px){.docs{grid-template-columns:1fr;padding:16px}.rules{padding:16px}}
 
-    li::before {
-      content: '→';
-      color: var(--accent-light);
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    }
+/* ---------- work (cards) ---------- */
+.works{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:30px 30px 26px;display:flex;flex-direction:column;overflow:hidden;transition:transform .5s var(--ease),border-color .3s}
+.card::after{content:'';position:absolute;left:0;top:0;height:2px;width:0;background:var(--accent);transition:width .7s var(--ease)}
+.card:hover{transform:translateY(-4px);border-color:var(--ink)}
+.card:hover::after{width:100%}
+.card .no{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.card h3{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3vw,36px);line-height:1.05;margin:14px 0 12px}
+.card .ctx{color:var(--muted);font-size:15.5px}
+.card ul{list-style:none;margin:20px 0 22px}
+.card li{padding:9px 0 9px 22px;border-top:1px solid var(--line);position:relative;font-size:14.5px}
+.card li::before{content:'→';position:absolute;left:0;color:var(--accent)}
+.stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.stack span{font-family:var(--mono);font-size:11.5px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.card.wide{grid-column:1/-1}
+.card.wide .ctx{max-width:760px}
+.tri{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0 22px}
+.tri>div{background:var(--bg);padding:20px}
+.tri h4{font-size:15.5px;font-weight:500;display:flex;align-items:center;gap:10px}
+.tri h4 i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--accent);border:1px solid currentColor;border-radius:4px;padding:0 5px}
+.tri p{font-size:14px;color:var(--muted);margin-top:8px}
+@media (max-width:1000px){.tri{grid-template-columns:1fr 1fr}.tri>div:last-child{grid-column:1/-1}}
+@media (max-width:860px){.works{grid-template-columns:1fr}.card{padding:24px 22px 22px}}
+@media (max-width:600px){.tri{grid-template-columns:1fr}}
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
+/* ---------- experience ---------- */
+.story{position:relative;margin-left:260px;padding-left:44px;max-width:820px}
+.story::before{content:'';position:absolute;left:0;top:8px;bottom:40px;width:1.5px;background:var(--line)}
+.story-fill{position:absolute;left:0;top:8px;bottom:40px;width:1.5px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .15s linear}
+.chap{position:relative;padding-bottom:52px}
+.chap::before{content:'';position:absolute;left:-50.5px;top:3px;width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);transition:background .5s,border-color .5s,box-shadow .5s}
+.chap.lit::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 18%,transparent)}
+.chap .eyebrow{transition:color .5s}
+.chap.lit .eyebrow{color:var(--accent)}
+.chap p{font-family:var(--serif);font-size:clamp(23px,2.5vw,30px);line-height:1.25;margin-top:10px}
+.chap p em{font-style:italic;color:var(--accent)}
+@media (max-width:860px){.story{margin-left:0;padding-left:34px}.chap::before{left:-40.5px}}
+.envs{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:stretch;margin-top:72px}
+.env{border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--surface)}
+.env .eyebrow{color:var(--accent)}
+.env h3{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05;margin:10px 0 16px}
+.env ul{list-style:none}
+.env li{padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.vs{display:grid;place-items:center;font-family:var(--serif);font-style:italic;font-size:28px;color:var(--muted)}
+.carry{margin-top:28px;font-family:var(--serif);font-size:clamp(24px,2.6vw,32px);line-height:1.2;max-width:820px}
+.carry em{color:var(--accent)}
+@media (max-width:900px){.envs{grid-template-columns:1fr}.vs{font-size:22px}}
 
-    a:hover {
-      opacity: 0.8;
-      text-decoration: underline;
-    }
+/* services */
+.svc{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line)}
+.svc-item{padding:36px 36px 40px 0;border-bottom:1px solid var(--line);position:relative}
+.svc-item:nth-child(odd){border-right:1px solid var(--line)}
+.svc-item:nth-child(even){padding-left:36px}
+.svc-item .num{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.svc-item h3{font-size:22px;font-weight:500;letter-spacing:-.01em;margin:14px 0 10px}
+.svc-item p{color:var(--muted);max-width:430px}
+.svc-item::after{content:'';position:absolute;left:0;bottom:-1px;height:1px;width:0;background:var(--accent);transition:width .6s var(--ease)}
+.svc-item:nth-child(even)::after{left:36px}
+.svc-item:hover::after{width:calc(100% - 36px)}
+@media (max-width:760px){.svc{grid-template-columns:1fr}.svc-item,.svc-item:nth-child(even){padding:30px 0;border-right:none!important}.svc-item:nth-child(even)::after{left:0}}
 
-    .project {
-      margin-bottom: 2.5rem;
-      position: relative;
-    }
+/* AI section */
+.ai{background:var(--ink);color:var(--bg);border-top:none}
+.ai .eyebrow{color:color-mix(in srgb,var(--bg) 60%,transparent)}
+.ai .sec-head p{color:color-mix(in srgb,var(--bg) 68%,transparent)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.col{border:1px solid color-mix(in srgb,var(--bg) 16%,transparent);border-radius:16px;padding:30px}
+.col h3{font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:10px}
+.col h3 i{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--bg) 50%,transparent)}
+.col.me-col{border-color:var(--accent)}
+.col.me-col h3 i{background:var(--accent)}
+.col ul{list-style:none}
+.col li{padding:13px 0;border-top:1px solid color-mix(in srgb,var(--bg) 12%,transparent);font-size:16px;display:flex;justify-content:space-between;gap:16px}
+.col li span{color:color-mix(in srgb,var(--bg) 55%,transparent);font-size:14px;text-align:right}
+.habits{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+.habit{padding:26px 0 0;border-top:1px solid color-mix(in srgb,var(--bg) 16%,transparent)}
+.habit .num{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.habit h4{font-size:18px;font-weight:500;margin:10px 0 8px}
+.habit p{font-size:14.5px;color:color-mix(in srgb,var(--bg) 62%,transparent)}
+.habit code{font-family:var(--mono);font-size:12px;color:var(--bg);background:color-mix(in srgb,var(--bg) 10%,transparent);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.habits-h{margin-top:64px;font-family:var(--serif);font-size:30px;line-height:1.1}
+@media (max-width:860px){.split,.habits{grid-template-columns:1fr}.col{padding:24px}.col li{flex-direction:column;gap:2px}.col li span{text-align:left}}
 
-    .project::before {
-      content: '//';
-      color: var(--accent-light);
-      position: absolute;
-      left: -1.5rem;
-      opacity: 0.6;
-    }
+/* toolkit */
+.kit{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kit-col{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;transition:transform .4s var(--ease),border-color .3s}
+.kit-col:hover{transform:translateY(-4px);border-color:var(--ink)}
+.kit-col h3{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.kit-col dl div{padding:12px 0;border-top:1px solid var(--line)}
+.kit-col dt{font-weight:500;font-size:15.5px}
+.kit-col dd{font-size:13.5px;color:var(--muted);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.chip{font-family:var(--mono);font-size:12.5px;padding:7px 13px;border:1px solid var(--line);border-radius:999px;color:var(--muted);transition:all .2s}
+.chip:hover{color:var(--ink);border-color:var(--ink)}
+@media (max-width:900px){.kit{grid-template-columns:1fr}}
 
-    .project strong {
-      color: var(--accent);
-      font-weight: normal;
-    }
+/* contact */
+.contact{padding:140px 0 120px}
+.contact h2{font-size:clamp(46px,8vw,112px);max-width:none;line-height:.95}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:44px}
+.mail a{font-family:var(--serif);font-size:clamp(26px,3.6vw,44px);text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 2px no-repeat;transition:background-size .5s var(--ease);word-break:break-all}
+.mail a:hover{background-size:100% 2px}
+.copy{font-family:var(--mono);font-size:12px;height:34px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;transition:all .2s}
+.copy:hover{color:var(--ink);border-color:var(--ink)}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.contact-meta{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:40px;color:var(--muted);font-size:15px}
+.contact-meta a{text-decoration:none;border-bottom:1px solid var(--line)}
+.contact-meta a:hover{border-color:var(--ink);color:var(--ink)}
 
-    .quote {
-      font-style: italic;
-      color: #888;
-      padding: 1rem 0 0 1rem;
-      border-left: 1px solid var(--accent-light);
-      margin: 1.5rem 0;
-    }
+footer{border-top:1px solid var(--line);padding:28px 0 40px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      margin-top: 1.5rem;
-    }
-
-    .stack-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1.2rem;
-    }
-
-    .badge {
-      background: var(--bg-light);
-      border: 1px solid var(--border);
-      color: var(--accent-light);
-      font-size: 0.8rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 2px;
-    }
-
-    .keyword { color: var(--accent); }
-    .comment { color: #6A9955; font-style: italic; }
-
-    @media (max-width: 768px) {
-      body { padding: 1.5rem; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .project::before { left: -1rem; }
-    }
-  </style>
+@media (max-width:900px){
+  .hero{padding:56px 0 64px}
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  section{padding:80px 0}
+  .stream-b{height:260px}
+}
+@media (max-width:480px){
+  .wrap{padding:0 16px}
+  .lede{font-size:16.5px}
+  .stat .n{font-size:42px}
+  .ev{grid-template-columns:70px 1fr}
+  .ev .m{grid-column:2}
+  .stream-b{height:320px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1><span class="keyword">class</span> <span>ozee</span></h1>
-    <p><span class="comment">// Backend engineer specializing in enterprise workflow systems — multi-tenant, multi-company, production-ready</span></p>
-  </header>
 
-  <section>
-    <h2><span class="keyword">function</span> WhyWorkWithMe()</h2>
-    <p>
-      I build backend systems for organizations where the rules are <strong>complex</strong>, the data is <strong>sensitive</strong>, and the cost of getting it wrong is real.
-    </p>
-    <ul style="margin-top: 1rem;">
-      <li><strong>Multi-tenant from the ground up</strong> — built systems that serve multiple companies, branches, and departments under one platform without bleeding data across tenants</li>
-      <li><strong>Workflow automation that reflects reality</strong> — approval chains, delegation, escalation, expired states — all modeled as first-class logic, not afterthoughts</li>
-      <li><strong>Complex domain → clean API</strong> — translated payroll rules, labor compliance, and org hierarchy into contracts that frontend teams can consume without guessing</li>
-      <li><strong>Scalable permission design</strong> — role hierarchies and granular access control that evolve as the org grows without requiring rewrites</li>
-      <li><strong>Legacy system surgery</strong> — untangle undocumented codebases and restore them to something maintainable</li>
-    </ul>
-    <div class="quote">
-      <span class="comment">/* The best backend is the one that handles edge cases you forgot to spec — delegation chains, expired approvals, conflicting rules — silently and correctly */</span>
+<nav id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><i></i>ozee</a>
+    <div class="nav-r">
+      <a href="#demo">Demo</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#ai">How I work</a>
+      <a href="#contact">Contact</a>
+      <button class="theme" id="theme" aria-label="Toggle colour theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
     </div>
-  </section>
+  </div>
+</nav>
 
-  <section>
-    <h2><span class="keyword">const</span> skills = [</h2>
-    <div class="skills-grid">
-      <ul>
-        <li><strong>Workflow Automation</strong><br>Approval pipelines, conditional routing, audit trails, and status state machines</li>
-        <li><strong>Multi-Tenant Architecture</strong><br>Isolated data per company/branch with shared infrastructure and configurable policies</li>
-        <li><strong>Payroll & Compliance Domain</strong><br>Salary components, deductions, period locks, and labor rule enforcement in code</li>
-      </ul>
-      <ul>
-        <li><strong>API Architecture</strong><br>RESTful contracts, structured responses, versioning, and documentation that frontend teams actually use</li>
-        <li><strong>Access Control</strong><br>Dynamic role hierarchies, permission matrices, and policy enforcement at the route and resource level</li>
-        <li><strong>Data Modeling</strong><br>Normalized schemas that balance query efficiency with the flexibility complex business rules demand</li>
-      </ul>
-    </div>
-    <div class="stack-badges">
-      <span class="badge">PHP 8</span>
-      <span class="badge">Laravel</span>
-      <span class="badge">MySQL</span>
-      <span class="badge">REST API</span>
-      <span class="badge">Sanctum / JWT</span>
-      <span class="badge">Eloquent ORM</span>
-      <span class="badge">Queue & Jobs</span>
-      <span class="badge">Node.js</span>
-    </div>
-    <h2 style="margin-top: 1.5rem;">]</h2>
-  </section>
-
-  <section>
-    <h2><span class="keyword">interface</span> Projects</h2>
-
-    <div class="project">
-      <strong>HRMS Platform</strong> — <span class="comment">// enterprise human resource management system</span>
-      <p style="margin-top: 0.5rem;">Full-featured HR system built for multi-company, multi-branch organizations. Dual-server architecture: dedicated REST API backend + separate frontend consumer.</p>
-      <ul style="margin-top: 0.8rem;">
-        <li><strong>Attendance & leave engine</strong> — real-time monitoring, periodic reporting, shift tracking, and leave quota enforcement per policy</li>
-        <li><strong>Approval workflow core</strong> — pluggable workflow types (leave, overtime, exit permit, documents) each added in under 4 hours thanks to modular design</li>
-        <li><strong>Payroll system</strong> — salary schema builder, component-level configuration, period locking, and compliance-enforced calculation</li>
-        <li><strong>Recruitment pipeline</strong> — job posting → applicant screening → candidate tracking in one flow</li>
-        <li><strong>Document management</strong> — employment contracts, warning letters, decisions — generated and archived per employee</li>
-        <li><strong>RBAC with 70% fewer role bugs</strong> — granular permission matrix with automated policy testing</li>
-      </ul>
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow fade-up" style="animation-delay:.05s"><b>●</b>&nbsp; Backend-first Product Engineer — Business Systems</div>
+      <h1 data-split>I build the part of your software where the <em>business rules</em> live.</h1>
+      <p class="lede fade-up" style="animation-delay:.75s">Payroll that can't be wrong. Payments that have to reconcile with the bank. Import papers that have to match to the letter. Reports pulled out of an ERP nobody documented. <strong>I take messy operational rules, turn them into systems people trust, and ship them fast with AI as my daily pair.</strong></p>
+      <div class="cta fade-up" style="animation-delay:.9s">
+        <a href="#demo" class="btn btn-solid">Try the rule engine <span class="arr">↓</span></a>
+        <a href="#work" class="btn btn-ghost">See the work</a>
+      </div>
+      <div class="meta fade-up" style="animation-delay:1.05s">
+        <span>Remote</span><span>Contract or full-time</span><span>Laravel · Vue · Node</span>
+      </div>
     </div>
 
-    <div class="project">
-      <strong>QOAP Middleware & Monitoring</strong> — <a href="https://github.com/mfrlab/qoap-middleware" target="_blank">github.com/mfrlab/qoap-middleware</a>
-      <p style="margin-top: 0.5rem;"><span class="comment">// request interception, transformation, and observability layer</span></p>
+    <div class="stream fade-up" style="animation-delay:.5s" aria-label="Simulated event log across the systems I run">
+      <div class="stream-h"><span class="live"><i></i>event stream</span><span>events</span></div>
+      <div class="stream-b" id="stream"></div>
+      <div class="stream-f">// simulated, but every line maps to something I built</div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <section>
-    <h2><span class="keyword">export</span> Contact</h2>
-    <p style="margin-bottom: 1rem;">
-      Open to remote work. Available for:
-    </p>
-    <ul style="padding-left: 0;">
-      <li><strong>Greenfield enterprise backend</strong> — HR, ERP, operations, or any domain with complex rules</li>
-      <li><strong>Legacy system rescue</strong> — especially Laravel monoliths that grew faster than their architecture</li>
-      <li><strong>API design & contract definition</strong> — for teams where frontend and backend move independently</li>
-      <li><strong>"How do we even structure this?" consulting</strong> — architecture sessions before the first line of code</li>
-    </ul>
-    <ul style="padding-left: 1rem; margin-top: 1.2rem;">
-      <li style="margin-bottom: 0.3rem;">Email: <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a></li>
-      <li style="margin-bottom: 0.3rem;">GitHub: <a href="https://github.com/mfrlab" target="_blank">github.com/mfrlab</a></li>
-    </ul>
-  </section>
+<section class="proof">
+  <div class="wrap proof-grid">
+    <div class="stat reveal"><div class="n"><span data-count="6">6</span><small>domains</small></div><p>HR, import, finance reporting, logistics, messaging and warehousing</p></div>
+    <div class="stat reveal d1"><div class="n"><span data-count="3">3</span><small>layers</small></div><p>API, web dashboard and mobile, built end to end by one engineer</p></div>
+    <div class="stat reveal d2"><div class="n">&lt;<span data-count="4">4</span><small>hrs</small></div><p>to add a new approval type to the HR workflow engine, thanks to a pluggable core</p></div>
+    <div class="stat reveal d3"><div class="n">−<span data-count="70">70</span><small>%</small></div><p>role and permission bugs after moving access control to a tested policy matrix</p></div>
+  </div>
+</section>
 
-  <footer>
-    <span class="comment">/* © 2025 ozee – remote-friendly · backend-first · building quietly behind the scenes */</span>
-  </footer>
+<!-- ============ DEMO ============ -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">01 — Live demo</div>
+      <div>
+        <h2 class="reveal">Four documents, four different authors. <em>One typo</em> can hold a container at port.</h2>
+        <p class="reveal d1">Every import shipment arrives with an approval, an invoice, a packing list and a bill of lading, each written by a different party. They have to agree with each other exactly. I built a rule engine that checks them while they're still drafts. Here's a small version. Pick a shipment and run it.</p>
+      </div>
+    </div>
+
+    <div class="demo reveal">
+      <div class="demo-top">
+        <div class="tabs" role="group" aria-label="Shipment">
+          <button class="tab" data-s="clean" aria-pressed="true">Clean shipment</button>
+          <button class="tab" data-s="typo" aria-pressed="false">Spot the typos</button>
+          <button class="tab" data-s="quota" aria-pressed="false">Over quota</button>
+        </div>
+        <button class="btn btn-solid run" id="run">Run checks →</button>
+      </div>
+      <div class="scn-desc" id="desc"></div>
+      <div class="rx">
+        <div class="docs" id="docs"></div>
+        <div class="rules">
+          <div class="eyebrow">Rules</div>
+          <div id="rules"></div>
+          <div class="verdict" id="verdict"><div class="big">—</div><p>Not checked yet.</p></div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note reveal">All data above is fictional. The full version adds more rules, configurable without a deploy, plus document versioning and an audit trail.</p>
+  </div>
+</section>
+
+<!-- ============ WORK ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">02 — Selected work</div>
+      <div>
+        <h2 class="reveal">Production systems in domains <em>most developers avoid.</em></h2>
+        <p class="reveal d1">Each one runs part of a real business every day. Here's the kind of problem each one solved and the skills it took.</p>
+      </div>
+    </div>
+
+    <div class="works">
+      <article class="card reveal">
+        <span class="no">/01 · Import &amp; trade compliance</span>
+        <h3>Import document validation</h3>
+        <p class="ctx">Import shipments come with paperwork from suppliers, shipping lines and government offices, and it all has to agree. I built a system that checks the documents against each other and against import quotas while they're still drafts.</p>
+        <ul>
+          <li>Configurable rule engine with warnings and suggestions</li>
+          <li>Quota tracking across revised approvals</li>
+          <li>Reading data straight from PDF documents</li>
+        </ul>
+        <div class="stack"><span>Laravel</span><span>MySQL</span><span>JavaScript</span></div>
+      </article>
+
+      <article class="card reveal d1">
+        <span class="no">/02 · Human resources</span>
+        <h3>HR &amp; payroll platform</h3>
+        <p class="ctx">One HR system for several companies, branches and departments: attendance, leave, overtime, recruitment, letters and payroll. An API backend serves both a web dashboard and mobile clients.</p>
+        <ul>
+          <li>Multi-level approval workflows with delegation</li>
+          <li>Payroll with deductions, installments and locked periods</li>
+          <li>Recruitment pipeline with interview scheduling and notifications</li>
+        </ul>
+        <div class="stack"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Sanctum</span></div>
+      </article>
+
+      <article class="card reveal">
+        <span class="no">/03 · Finance &amp; compliance reporting</span>
+        <h3>Reporting on top of an ERP</h3>
+        <p class="ctx">The business ran on an off-the-shelf ERP that couldn't produce the reports management needed. I worked out its undocumented database and built a reporting app across multiple companies.</p>
+        <ul>
+          <li>Reverse-engineering an unfamiliar database schema</li>
+          <li>Large exports streamed without running out of memory</li>
+          <li>Validating numbers with finance before going live</li>
+        </ul>
+        <div class="stack"><span>Laravel</span><span>Inertia</span><span>Vue 3</span><span>MySQL</span></div>
+      </article>
+
+      <article class="card reveal d1">
+        <span class="no">/04 · Logistics</span>
+        <h3>Fleet operations platform</h3>
+        <p class="ctx">A system for running a trucking operation, with separate views for admins, management, drivers, technicians and customers.</p>
+        <ul>
+          <li>Operations dashboard: orders, fleet status, expiring vehicle documents</li>
+          <li>Role-based access with a full activity log</li>
+          <li>Bilingual interface and a phased roadmap toward a mobile app</li>
+        </ul>
+        <div class="stack"><span>Laravel</span><span>Vue 3 + TS</span><span>shadcn-vue</span><span>Pest</span></div>
+      </article>
+
+      <article class="card reveal">
+        <span class="no">/05 · Infrastructure</span>
+        <h3>Messaging API gateway</h3>
+        <p class="ctx">A single API that other applications call to send WhatsApp messages, designed so email and SMS can plug in the same way, with uptime monitoring for connected services.</p>
+        <ul>
+          <li>Per-client API keys with granular permissions</li>
+          <li>Queued, paced delivery to avoid spam flags</li>
+          <li>Request logging and service health checks</li>
+        </ul>
+        <div class="stack"><span>Laravel</span><span>Queues</span><span>Vue 3</span></div>
+      </article>
+
+      <article class="card reveal d1">
+        <span class="no">/06 · Warehousing</span>
+        <h3>Real-time queue board</h3>
+        <p class="ctx">Warehouse staff manage the truck queue in a spreadsheet. This turns it into live screens for every warehouse and keeps the main system in sync.</p>
+        <ul>
+          <li>Live push updates to every screen</li>
+          <li>Debounced sync, so a burst of edits becomes one request</li>
+          <li>Separate mobile view for drivers</li>
+        </ul>
+        <div class="stack"><span>Node.js</span><span>Express</span><span>Socket.io</span></div>
+      </article>
+
+      <article class="card wide reveal">
+        <span class="no">/07 · Regulated integrations</span>
+        <h3>Payments, tax, e-signature and identity</h3>
+        <p class="ctx">Across several projects I've connected business systems to banks, payment providers, the tax system, certified e-signature providers and identity verification. In this kind of work a bug means lost money, an invalid contract or a failed audit, so I build it carefully.</p>
+        <div class="tri">
+          <div><h4><i>H2H</i>Bank host-to-host</h4><p>Direct bank connections for transfers and status checks, with signed requests and reconciliation.</p></div>
+          <div><h4><i>PG</i>Payment gateways</h4><p>Payments and callbacks, with webhook verification and safe handling of duplicate notifications.</p></div>
+          <div><h4><i>TAX</i>Tax invoices</h4><p>Issuing VAT invoices (e-Faktur) through a third-party tax API, matched to sales data.</p></div>
+          <div><h4><i>SIGN</i>Digital signatures</h4><p>Legally valid e-signing flows with two major certified providers, Privy and Digisign.</p></div>
+          <div><h4><i>KYC</i>Identity verification</h4><p>Verifying people against national population registry (Dukcapil) data before onboarding.</p></div>
+        </div>
+        <div class="stack"><span>REST APIs</span><span>Signed requests</span><span>Webhooks</span><span>Idempotency</span><span>Reconciliation</span><span>KYC</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">03 — Experience</div>
+      <div>
+        <h2 class="reveal">I've watched a company grow up, <em>and get acquired.</em></h2>
+        <p class="reveal d1">I didn't just read about these stages. I was on the team through each of them, and each one taught me something different about building software.</p>
+      </div>
+    </div>
+
+    <div class="story" id="story">
+      <i class="story-fill" id="storyFill"></i>
+      <div class="chap reveal">
+        <div class="eyebrow">Early days</div>
+        <p>I joined when the team was small enough that <em>everyone did everything</em>: backend, deploys, the database, and talking to users when something broke.</p>
+      </div>
+      <div class="chap reveal">
+        <div class="eyebrow">Scaling</div>
+        <p>I stayed as it grew into several teams, and learned the moment when <em>speed alone stops working</em> and reviews, conventions and documentation start carrying the weight.</p>
+      </div>
+      <div class="chap reveal">
+        <div class="eyebrow">Due diligence &amp; acquisition</div>
+        <p>I went through due diligence, with outside eyes on our systems, data and documentation, and <em>saw the company acquired</em> by a larger one.</p>
+      </div>
+      <div class="chap reveal">
+        <div class="eyebrow">Corporate</div>
+        <p>Since then I've worked inside a corporate environment, where every change needs a sign-off and <em>compliance isn't optional.</em></p>
+      </div>
+    </div>
+
+    <div class="envs">
+      <div class="env reveal">
+        <div class="eyebrow">Startup</div>
+        <h3>A full, dedicated product team</h3>
+        <ul>
+          <li>Decisions made in a day, shipped in a week</li>
+          <li>Owning features end to end, from schema to release</li>
+          <li>Building structure while everything is moving</li>
+        </ul>
+      </div>
+      <div class="vs reveal d1">vs</div>
+      <div class="env reveal d2">
+        <div class="eyebrow">Corporate</div>
+        <h3>Process, sign-offs and audit</h3>
+        <ul>
+          <li>Changes go through formal approval</li>
+          <li>Documentation and compliance aren't optional</li>
+          <li>Finance, HR and operations as daily stakeholders</li>
+        </ul>
+      </div>
+    </div>
+    <p class="carry reveal">What I carry between them: I document like a corporation, and <em>ship like a startup.</em></p>
+  </div>
+</section>
+
+<!-- ============ AI ============ -->
+<section class="ai" id="ai">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">04 — How I work</div>
+      <div>
+        <h2 class="reveal">Fast like vibe coding. <em>Reviewed like it's payroll.</em></h2>
+        <p class="reveal d1">Everything above was built with an AI coding agent as my daily pair. That's how one engineer covers this much ground. The speed comes from AI; the reason it doesn't fall apart comes from a few habits.</p>
+      </div>
+    </div>
+    <div class="split">
+      <div class="col reveal">
+        <h3><i></i>AI drafts it</h3>
+        <ul>
+          <li>Scaffolding &amp; CRUD <span>controllers, requests, resources</span></li>
+          <li>Migrations &amp; seeders <span>from a schema I've designed</span></li>
+          <li>Exploring an unknown codebase <span>or an undocumented database</span></li>
+          <li>Refactors across many files <span>renames, extractions, upgrades</span></li>
+          <li>Clickable prototypes <span>to agree on a flow first</span></li>
+        </ul>
+      </div>
+      <div class="col me-col reveal d1">
+        <h3><i></i>I decide it</h3>
+        <ul>
+          <li>The data model <span>and where tenant boundaries sit</span></li>
+          <li>Who can see and approve what <span>roles, scopes, policies</span></li>
+          <li>Anything touching salaries <span>calculations, locks, rounding</span></li>
+          <li>Whether the data can be trusted <span>validated against reality</span></li>
+          <li>What reaches production <span>every diff read before merge</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="habits-h reveal">Three habits that keep it from turning into a mess</div>
+    <div class="habits">
+      <div class="habit reveal"><div class="num">/a</div><h4>A design doc for every feature</h4><p>Why it exists, its limits, and the decisions behind it. Each moves <code>IDEATION → IN_DEV → PRODUCTION</code>. The AI reads it before touching code, so feature #40 still respects what was decided in feature #3.</p></div>
+      <div class="habit reveal d1"><div class="num">/b</div><h4>Every change goes through a visible diff</h4><p>No silent scripted rewrites, no history rewrites without me. If I can't review it line by line, it doesn't land.</p></div>
+      <div class="habit reveal d2"><div class="num">/c</div><h4>A monthly report in plain language</h4><p>What shipped, what it fixed, and who it helped, written for management rather than engineers. Being able to explain the work is part of the work.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">05 — Where I'm useful</div>
+      <div><h2 class="reveal">Hire me when the rules are <em>complicated</em> and the data actually matters.</h2></div>
+    </div>
+    <div class="svc">
+      <div class="svc-item reveal"><div class="num">/01</div><h3>Internal business systems</h3><p>HR, payroll, import, operations, anything with approvals and money moving through it. From the first schema to a deployed, documented system.</p></div>
+      <div class="svc-item reveal d1"><div class="num">/02</div><h3>Reports your ERP can't give you</h3><p>I'll dig through the database nobody documented, find where the real numbers live, and build reports finance can sign off on.</p></div>
+      <div class="svc-item reveal"><div class="num">/03</div><h3>Payments &amp; integrations</h3><p>Bank host-to-host, payment gateways, tax invoices, e-signatures, identity verification, WhatsApp. All behind clean interfaces with logging and reconciliation.</p></div>
+      <div class="svc-item reveal d1"><div class="num">/04</div><h3>Legacy Laravel rescue</h3><p>The app that grew faster than its architecture. I map it, document it, add tests where it hurts, then improve it without stopping the business.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOOLKIT ============ -->
+<section id="toolkit">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow reveal">06 — Toolkit</div>
+      <div><h2 class="reveal">What I bring to a team, <em>in plain words.</em></h2></div>
+    </div>
+    <div class="kit">
+      <div class="kit-col reveal">
+        <h3>Domain</h3>
+        <dl>
+          <div><dt>Workflow &amp; rule engines</dt><dd>Approvals, delegation, rules stored as data</dd></div>
+          <div><dt>Payroll &amp; HR compliance</dt><dd>Effective-dated schemes, social security, tax installments, period locks</dd></div>
+          <div><dt>Import &amp; customs documents</dt><dd>PI to PIB consistency, quotas, HS codes</dd></div>
+          <div><dt>ERP data extraction</dt><dd>Reverse-engineering schemas, validating numbers</dd></div>
+          <div><dt>Regulated integrations</dt><dd>Bank host-to-host, payment gateways, e-Faktur, e-signature, KYC</dd></div>
+        </dl>
+      </div>
+      <div class="kit-col reveal d1">
+        <h3>Engineering</h3>
+        <dl>
+          <div><dt>API design</dt><dd>Strict contracts between separately deployed servers</dd></div>
+          <div><dt>Multi-tenant architecture</dt><dd>Company, branch and client isolation on shared infra</dd></div>
+          <div><dt>Access control</dt><dd>Roles, abilities and policies, tested as policy</dd></div>
+          <div><dt>Large data handling</dt><dd>Cursor exports, chunking, server-side search</dd></div>
+          <div><dt>Real-time &amp; queues</dt><dd>Socket.io, debounced sync, delayed jobs</dd></div>
+        </dl>
+      </div>
+      <div class="kit-col reveal d2">
+        <h3>Delivery</h3>
+        <dl>
+          <div><dt>AI-assisted development</dt><dd>Used daily, with docs, diffs and tests as guardrails</dd></div>
+          <div><dt>Design docs &amp; roadmaps</dt><dd>Decisions written down so they outlive the chat</dd></div>
+          <div><dt>Prototype first</dt><dd>Clickable flows to agree before building</dd></div>
+          <div><dt>Production-safe changes</dt><dd>Non-breaking migrations on live payroll</dd></div>
+          <div><dt>Explaining to non-engineers</dt><dd>Reports management actually reads</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="chips reveal">
+      <span class="chip">PHP 8</span><span class="chip">Laravel 12</span><span class="chip">MySQL</span><span class="chip">Inertia</span><span class="chip">Vue 3</span><span class="chip">TypeScript</span><span class="chip">Tailwind</span><span class="chip">shadcn-vue</span><span class="chip">Node.js</span><span class="chip">Socket.io</span><span class="chip">Sanctum</span><span class="chip">spatie/permission</span><span class="chip">Pest</span><span class="chip">Expo / React Native</span><span class="chip">Supabase</span><span class="chip">WhatsApp API</span><span class="chip">Payment gateways</span><span class="chip">Bank H2H</span><span class="chip">e-Signature</span><span class="chip">AI coding agents</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow reveal">07 — Contact</div>
+    <h2 class="reveal" style="margin-top:22px">Got a system with<br>too many rules? <em>Tell me.</em></h2>
+    <div class="mail reveal d1">
+      <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a>
+      <button class="copy" id="copy" data-v="mohammadfr11@gmail.com">copy</button>
+    </div>
+    <div class="contact-meta reveal d2">
+      <a href="https://github.com/mfrlab" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/mfrozi/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <span>Open to remote contract &amp; full-time roles</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> ozee</span>
+    <span>Designed by hand, built with AI, hosted on GitHub Pages.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const sleep = ms => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 60) : ms));
+  $('#yr').textContent = new Date().getFullYear();
+
+  /* theme */
+  const root = document.documentElement;
+  try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
+  $('#theme').addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+  });
+
+  /* nav border */
+  const nav = $('#nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive: true });
+
+  /* headline split */
+  $$('[data-split]').forEach(el => {
+    const nodes = [...el.childNodes]; el.textContent = ''; let i = 0;
+    const wrap = n => { const w = document.createElement('span'); w.className = 'w';
+      let inner = n; if (n.nodeType === 3) { inner = document.createElement('span'); inner.textContent = n.textContent; }
+      inner.style.setProperty('--i', i++); w.appendChild(inner); return w; };
+    nodes.forEach(n => {
+      if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(p => {
+        if (!p) return; if (/^\s+$/.test(p)) el.appendChild(document.createTextNode(' '));
+        else el.appendChild(wrap(document.createTextNode(p)));
+      }); else el.appendChild(wrap(n));
+    });
+  });
+
+  /* reveal + count */
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target);
+    e.target.querySelectorAll('[data-count]').forEach(c => {
+      const end = +c.dataset.count, t0 = performance.now(), d = reduce ? 1 : 1300;
+      const tick = t => { const p = Math.min((t - t0) / d, 1); c.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    });
+  }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  /* experience timeline: line draws with scroll, chapters light up as it reaches them */
+  const story = $('#story'), fill = $('#storyFill'), chaps = $$('.chap');
+  const onStory = () => {
+    const r = story.getBoundingClientRect(), mark = innerHeight * .6;
+    const p = Math.max(0, Math.min(1, (mark - r.top) / (r.height - 40)));
+    fill.style.transform = `scaleY(${p})`;
+    chaps.forEach(c => c.classList.toggle('lit', c.getBoundingClientRect().top < mark));
+  };
+  addEventListener('scroll', onStory, { passive: true }); addEventListener('resize', onStory); onStory();
+  $$('.reveal').forEach(el => io.observe(el));
+
+  /* hero event stream */
+  const events = [
+    ['import','rule.fail','invoice total ≠ sum of lines','bad'],
+    ['msg','message.queued','paced · delay 7s','info'],
+    ['pay','h2h.transfer','bank · status settled','ok'],
+    ['tax','invoice.issued','VAT invoice via API','info'],
+    ['kyc','identity.verified','registry match · ok','ok'],
+    ['sign','document.signed','contract · 2 of 2 signers','ok'],
+    ['hr','approval.delegated','approver away → deputy','warn'],
+    ['queue','sync.debounced','14 edits → 1 request','ok'],
+    ['fleet','doc.expiring','vehicle permit · 12 days','warn'],
+    ['report','export.stream','streaming large export','info'],
+    ['hr','payroll.locked','period closed · read-only','muted'],
+    ['import','quota.check','enough quota left','ok'],
+    ['msg','uptime.down','service · 3 failed checks','bad'],
+    ['fleet','order.waiting','orders need action','info'],
+    ['pay','webhook.verified','gateway · duplicate ignored','muted'],
+    ['import','rule.pass','names match across docs','ok'],
+    ['queue','board.push','live screens updated','info'],
+    ['hr','approval.granted','level 2 · request closed','ok'],
+    ['report','row.flagged','value doesn’t reconcile','warn'],
+  ];
+  const stream = $('#stream'); let ei = 0, streamOn = true;
+  const pushEv = () => {
+    const [s, k, m, t] = events[ei++ % events.length];
+    const r = document.createElement('div'); r.className = 'ev';
+    r.innerHTML = `<span class="sys">[${s}]</span><span class="k ${t}">${k}</span><span class="m">${m}</span>`;
+    stream.appendChild(r); while (stream.children.length > 11) stream.firstChild.remove();
+  };
+  for (let i = 0; i < 6; i++) pushEv();
+  new IntersectionObserver(es => streamOn = es[0].isIntersecting).observe(stream);
+  if (!reduce) setInterval(() => { if (streamOn && !document.hidden) pushEv(); }, 1500);
+
+  /* ---------- rule engine demo ---------- */
+  const SVG = `<svg class="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><svg class="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M12 5v9M12 19h.01"/></svg><svg class="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+  const CONS = 'PT Acme Logam Utama';
+  const base = () => ({
+    PI: { t: 'Import approval', s: 'PI · govt', f: { no: ['No.', 'PI-0001/2026'], hs: ['HS', '7208.39'], quota: ['Quota', '500,000 kg'], used: ['Used', '410,000 kg'] } },
+    CI: { t: 'Commercial invoice', s: 'CI · supplier', f: { cons: ['To', CONS], hs: ['HS', '7208.39'], l1: ['#1', '16,000 × 0.62 = 9,920.00'], l2: ['#2', '16,000 × 0.61 = 9,760.00'], l3: ['#3', '16,000 × 0.60 = 9,600.00'], total: ['Total', 'USD 29,280.00'] } },
+    PL: { t: 'Packing list', s: 'PL · supplier', f: { cons: ['To', CONS], net: ['Net', '48,000 kg'], gross: ['Gross', '48,620 kg'], pk: ['Packages', '24 coils'] } },
+    BL: { t: 'Bill of lading', s: 'BL · shipping line', f: { cons: ['To', CONS], gross: ['Gross', '48,620 kg'], ct: ['Containers', '2 × 20ft'], port: ['Discharge', 'Tanjung Priok'] } },
+  });
+  const RULES = [
+    { t: 'Consignee identical, letter by letter', fs: ['CI.cons', 'PL.cons', 'BL.cons'] },
+    { t: 'Each line: qty × price = amount', fs: ['CI.l1', 'CI.l2', 'CI.l3'] },
+    { t: 'Sum of lines = invoice total', fs: ['CI.l1', 'CI.l2', 'CI.l3', 'CI.total'] },
+    { t: 'Gross weight agrees, PL ↔ BL', fs: ['PL.gross', 'BL.gross'] },
+    { t: 'HS code matches the approval', fs: ['PI.hs', 'CI.hs'] },
+    { t: 'Quota left covers this shipment', fs: ['PI.quota', 'PI.used', 'PL.net'] },
+  ];
+  const P = m => ({ s: 'pass', m });
+  const SC = {
+    clean: {
+      desc: '<b>Everything lines up.</b> This is what most shipments look like. The engine should stay out of the way.',
+      patch: {},
+      res: [P('identical in 3 documents'), P('3 of 3 lines correct'), P('29,280.00 = 29,280.00'), P('48,620 kg in both'), P('7208.39 in both'), P('90,000 kg left · needs 48,000')],
+      end: ['ok', 'Ready to promote', 'All 6 rules pass. The set can move to the final import record.']
+    },
+    typo: {
+      desc: '<b>Two small mistakes are hidden in these papers.</b> Try to find them yourself before you press run.',
+      patch: { 'BL.cons': 'PT Acme Logam Utarna', 'CI.total': 'USD 29,820.00' },
+      res: [{ s: 'warn', m: 'BL says "Utarna", others "Utama"', flag: ['BL.cons'], lv: 'warn' }, P('3 of 3 lines correct'),
+            { s: 'fail', m: 'lines sum 29,280.00 · stated 29,820.00', flag: ['CI.total'], lv: 'bad' }, P('48,620 kg in both'), P('7208.39 in both'), P('90,000 kg left · needs 48,000')],
+      end: ['bad', 'Held · 2 issues', 'A transposed total and an "rn" that should be an "m". Both pass a quick human read.']
+    },
+    quota: {
+      desc: '<b>The papers are perfect.</b> The problem is what came before: earlier shipments already used most of the approved quota.',
+      patch: { 'PI.used': '470,000 kg' },
+      res: [P('identical in 3 documents'), P('3 of 3 lines correct'), P('29,280.00 = 29,280.00'), P('48,620 kg in both'), P('7208.39 in both'),
+            { s: 'fail', m: 'needs 48,000 kg · only 30,000 left', flag: ['PI.used', 'PL.net'], lv: 'bad' }],
+      end: ['bad', 'Blocked · over quota', 'This shipment would exceed the approval by 18,000 kg. Caught while it was still a draft.']
+    }
+  };
+
+  const docsEl = $('#docs'), rulesEl = $('#rules'), verdict = $('#verdict'), run = $('#run'), tabs = $$('.tab');
+  let cur = 'clean', busy = false;
+  const fld = id => docsEl.querySelector(`[data-f="${id}"]`);
+  const render = () => {
+    const d = base(); Object.entries(SC[cur].patch).forEach(([k, v]) => { const [a, b] = k.split('.'); d[a].f[b][1] = v; });
+    docsEl.innerHTML = Object.entries(d).map(([key, doc]) =>
+      `<div class="doc"><h4>${doc.t}<span>${doc.s}</span></h4>${Object.entries(doc.f).map(([fk, [l, v]]) =>
+        `<div class="f" data-f="${key}.${fk}"><span>${l}</span><span>${v}</span></div>`).join('')}</div>`).join('');
+    rulesEl.innerHTML = RULES.map(r => `<div class="rule"><span class="ic">${SVG}</span><div><div class="rt">${r.t}</div><div class="rm"></div></div></div>`).join('');
+    setVerdict('', '—', 'Not checked yet.');
+  };
+  const setVerdict = (c, b, p) => { verdict.className = 'verdict ' + c; verdict.querySelector('.big').textContent = b; verdict.querySelector('p').textContent = p; };
+  const pick = s => { cur = s; tabs.forEach(t => t.setAttribute('aria-pressed', t.dataset.s === s)); $('#desc').innerHTML = SC[s].desc; render(); run.textContent = 'Run checks →'; };
+  tabs.forEach(t => t.addEventListener('click', () => !busy && pick(t.dataset.s)));
+
+  run.addEventListener('click', async () => {
+    if (busy) return; busy = true; render();
+    run.disabled = true; tabs.forEach(t => t.disabled = true);
+    setVerdict('wait', 'Checking…', 'Reading four documents against each other.');
+    const rows = $$('#rules .rule'), res = SC[cur].res;
+    for (let i = 0; i < RULES.length; i++) {
+      const row = rows[i], fs = RULES[i].fs.map(fld);
+      row.className = 'rule run'; fs.forEach(f => f.classList.add('scan'));
+      await sleep(750);
+      fs.forEach(f => f.classList.remove('scan'));
+      row.className = 'rule ' + res[i].s; row.querySelector('.rm').textContent = res[i].m;
+      (res[i].flag || []).forEach(id => fld(id).classList.add(res[i].lv));
+      await sleep(180);
+    }
+    await sleep(300);
+    setVerdict(...SC[cur].end);
+    run.textContent = 'Run again ↻'; run.disabled = false; tabs.forEach(t => t.disabled = false); busy = false;
+  });
+  pick('clean');
+
+  /* copy email */
+  const copy = $('#copy');
+  copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(copy.dataset.v); copy.textContent = 'copied ✓'; copy.classList.add('done'); }
+    catch (e) { copy.textContent = 'select & copy'; }
+    setTimeout(() => { copy.textContent = 'copy'; copy.classList.remove('done'); }, 1800);
+  });
+})();
+</script>
 </body>
 </html>
