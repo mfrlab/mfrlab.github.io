@@ -130,6 +130,11 @@ h2 em{font-style:italic;color:var(--accent)}
 .stat .n{font-family:var(--serif);font-size:54px;line-height:1;letter-spacing:-.02em}
 .stat .n small{font-size:.5em;color:var(--muted);margin-left:2px}
 .stat p{font-size:14px;color:var(--muted);margin-top:12px;max-width:230px}
+a.stat{text-decoration:none;color:inherit;display:flex;flex-direction:column;position:relative}
+a.stat .n{transition:color .3s}
+a.stat:hover .n{color:var(--accent)}
+.stat .go{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--muted);transition:color .3s,transform .4s var(--ease);display:inline-block}
+a.stat:hover .go{color:var(--accent);transform:translateY(3px)}
 @media (max-width:860px){.proof-grid{grid-template-columns:1fr 1fr}.stat{padding:30px 18px 30px 0!important}.stat:nth-child(2n){border-right:none;padding-left:18px!important}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
 /* ---------- demo: rule engine ---------- */
@@ -312,6 +317,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   html{scroll-behavior:auto}
   .reveal{opacity:1;transform:none}
 }
+
+/* language toggle */
+.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:none;cursor:pointer;font-family:var(--mono);font-size:11.5px;transition:border-color .2s}
+.lang:hover{border-color:var(--ink)}
+.lang span{padding:3px 8px;border-radius:999px;color:var(--muted);transition:background .3s,color .3s}
+.lang span.on{background:var(--ink);color:var(--bg)}
+.nav-tools{display:flex;align-items:center;gap:10px}
 </style>
 </head>
 <body>
@@ -320,14 +332,17 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   <div class="wrap">
     <a href="#top" class="logo"><i></i>ozee</a>
     <div class="nav-r">
-      <a href="#demo">Demo</a>
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#ai">How I work</a>
-      <a href="#contact">Contact</a>
-      <button class="theme" id="theme" aria-label="Toggle colour theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      </button>
+      <a href="#demo" data-i="n.demo">Demo</a>
+      <a href="#work" data-i="n.work">Work</a>
+      <a href="#experience" data-i="n.exp">Experience</a>
+      <a href="#ai" data-i="n.how">How I work</a>
+      <a href="#contact" data-i="n.contact">Contact</a>
+      <div class="nav-tools">
+        <button class="lang" id="lang" aria-label="Switch language / Ganti bahasa"><span data-l="en">EN</span><span data-l="id">ID</span></button>
+        <button class="theme" id="theme" aria-label="Toggle colour theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
@@ -335,32 +350,30 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <header class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow fade-up" style="animation-delay:.05s"><b>●</b>&nbsp; Backend-first Product Engineer — Business Systems</div>
-      <h1 data-split>I build the part of your software where the <em>business rules</em> live.</h1>
-      <p class="lede fade-up" style="animation-delay:.75s">Payroll that can't be wrong. Payments that have to reconcile with the bank. Import papers that have to match to the letter. Reports pulled out of an ERP nobody documented. <strong>I take messy operational rules, turn them into systems people trust, and ship them fast with AI as my daily pair.</strong></p>
+      <div class="eyebrow fade-up" style="animation-delay:.05s" data-i="h.eb"><b>●</b>&nbsp; Backend-first Product Engineer — Business Systems</div>
+      <h1 data-split data-i="h.h1">I build the part of your software where the <em>business rules</em> live.</h1>
+      <p class="lede fade-up" style="animation-delay:.75s" data-i="h.lede">Payroll that can't be wrong. Payments that have to reconcile with the bank. Import papers that have to match to the letter. Reports pulled out of an ERP nobody documented. <strong>I take messy operational rules, turn them into systems people trust, and ship them fast with AI as my daily pair.</strong></p>
       <div class="cta fade-up" style="animation-delay:.9s">
-        <a href="#demo" class="btn btn-solid">Try the rule engine <span class="arr">↓</span></a>
-        <a href="#work" class="btn btn-ghost">See the work</a>
+        <a href="#demo" class="btn btn-solid" data-i="h.cta1">Try the rule engine <span class="arr">↓</span></a>
+        <a href="#work" class="btn btn-ghost" data-i="h.cta2">See the work</a>
       </div>
-      <div class="meta fade-up" style="animation-delay:1.05s">
-        <span>Remote</span><span>Contract or full-time</span><span>Laravel · Vue · Node</span>
-      </div>
+      <div class="meta fade-up" style="animation-delay:1.05s" data-i="h.meta"><span>Remote</span><span>Contract or full-time</span><span>Laravel · Vue · Node</span></div>
     </div>
 
-    <div class="stream fade-up" style="animation-delay:.5s" aria-label="Simulated event log across the systems I run">
+    <div class="stream fade-up" style="animation-delay:.5s" aria-label="Simulated event log">
       <div class="stream-h"><span class="live"><i></i>event stream</span><span>events</span></div>
       <div class="stream-b" id="stream"></div>
-      <div class="stream-f">// simulated, but every line maps to something I built</div>
+      <div class="stream-f" data-i="h.sf">// simulated, but every line maps to something I built</div>
     </div>
   </div>
 </header>
 
 <section class="proof">
   <div class="wrap proof-grid">
-    <div class="stat reveal"><div class="n"><span data-count="6">6</span><small>domains</small></div><p>HR, import, finance reporting, logistics, messaging and warehousing</p></div>
-    <div class="stat reveal d1"><div class="n"><span data-count="3">3</span><small>layers</small></div><p>API, web dashboard and mobile, built end to end by one engineer</p></div>
-    <div class="stat reveal d2"><div class="n">&lt;<span data-count="4">4</span><small>hrs</small></div><p>to add a new approval type to the HR workflow engine, thanks to a pluggable core</p></div>
-    <div class="stat reveal d3"><div class="n">−<span data-count="70">70</span><small>%</small></div><p>role and permission bugs after moving access control to a tested policy matrix</p></div>
+    <a class="stat reveal" href="#demo"><div class="n"><span data-count="1">1</span><small data-i="s.1s">live demo</small></div><p data-i="s.1p">A working rule engine you can run right here, with three real-world cases.</p><span class="go" data-i="s.1g">Try it ↓</span></a>
+    <a class="stat reveal d1" href="#work"><div class="n"><span data-count="7">7</span><small data-i="s.2s">projects</small></div><p data-i="s.2p">Across HR, import, finance reporting, logistics, messaging and warehousing.</p><span class="go" data-i="s.2g">See projects ↓</span></a>
+    <a class="stat reveal d2" href="#integrations"><div class="n"><span data-count="5">5</span><small data-i="s.3s">integration types</small></div><p data-i="s.3p">Bank host-to-host, payment gateway, tax invoices, e-signature and KYC.</p><span class="go" data-i="s.3g">See integrations ↓</span></a>
+    <a class="stat reveal d3" href="#experience"><div class="n"><span data-count="2">2</span><small data-i="s.4s">environments</small></div><p data-i="s.4p">A startup that grew into an acquisition, and a corporate with formal sign-offs.</p><span class="go" data-i="s.4g">Read the story ↓</span></a>
   </div>
 </section>
 
@@ -368,33 +381,33 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section id="demo">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">01 — Live demo</div>
+      <div class="eyebrow reveal" data-i="d.eb">01 — Live demo</div>
       <div>
-        <h2 class="reveal">Four documents, four different authors. <em>One typo</em> can hold a container at port.</h2>
-        <p class="reveal d1">Every import shipment arrives with an approval, an invoice, a packing list and a bill of lading, each written by a different party. They have to agree with each other exactly. I built a rule engine that checks them while they're still drafts. Here's a small version. Pick a shipment and run it.</p>
+        <h2 class="reveal" data-i="d.h2">Four documents, four different authors. <em>One typo</em> can hold a container at port.</h2>
+        <p class="reveal d1" data-i="d.p">Every import shipment arrives with an approval, an invoice, a packing list and a bill of lading, each written by a different party. They have to agree with each other exactly. I built a rule engine that checks them while they're still drafts. Here's a small version. Pick a shipment and run it.</p>
       </div>
     </div>
 
     <div class="demo reveal">
       <div class="demo-top">
         <div class="tabs" role="group" aria-label="Shipment">
-          <button class="tab" data-s="clean" aria-pressed="true">Clean shipment</button>
-          <button class="tab" data-s="typo" aria-pressed="false">Spot the typos</button>
-          <button class="tab" data-s="quota" aria-pressed="false">Over quota</button>
+          <button class="tab" data-s="clean" aria-pressed="true" data-i="d.t1">Clean shipment</button>
+          <button class="tab" data-s="typo" aria-pressed="false" data-i="d.t2">Spot the typos</button>
+          <button class="tab" data-s="quota" aria-pressed="false" data-i="d.t3">Over quota</button>
         </div>
-        <button class="btn btn-solid run" id="run">Run checks →</button>
+        <button class="btn btn-solid run" id="run"></button>
       </div>
       <div class="scn-desc" id="desc"></div>
       <div class="rx">
         <div class="docs" id="docs"></div>
         <div class="rules">
-          <div class="eyebrow">Rules</div>
+          <div class="eyebrow" data-i="d.rules">Rules</div>
           <div id="rules"></div>
-          <div class="verdict" id="verdict"><div class="big">—</div><p>Not checked yet.</p></div>
+          <div class="verdict" id="verdict"><div class="big">—</div><p></p></div>
         </div>
       </div>
     </div>
-    <p class="demo-note reveal">All data above is fictional. The full version adds more rules, configurable without a deploy, plus document versioning and an audit trail.</p>
+    <p class="demo-note reveal" data-i="d.note">All data above is fictional. The full version adds more rules, configurable without a deploy, plus document versioning and an audit trail.</p>
   </div>
 </section>
 
@@ -402,96 +415,72 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section id="work">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">02 — Selected work</div>
+      <div class="eyebrow reveal" data-i="w.eb">02 — Selected work</div>
       <div>
-        <h2 class="reveal">Production systems in domains <em>most developers avoid.</em></h2>
-        <p class="reveal d1">Each one runs part of a real business every day. Here's the kind of problem each one solved and the skills it took.</p>
+        <h2 class="reveal" data-i="w.h2">Production systems in domains <em>most developers avoid.</em></h2>
+        <p class="reveal d1" data-i="w.p">Each one runs part of a real business every day. Here's the kind of problem each one solved and the skills it took.</p>
       </div>
     </div>
 
     <div class="works">
       <article class="card reveal">
-        <span class="no">/01 · Import &amp; trade compliance</span>
-        <h3>Import document validation</h3>
-        <p class="ctx">Import shipments come with paperwork from suppliers, shipping lines and government offices, and it all has to agree. I built a system that checks the documents against each other and against import quotas while they're still drafts.</p>
-        <ul>
-          <li>Configurable rule engine with warnings and suggestions</li>
-          <li>Quota tracking across revised approvals</li>
-          <li>Reading data straight from PDF documents</li>
-        </ul>
+        <span class="no" data-i="c1.no">/01 · Import &amp; trade compliance</span>
+        <h3 data-i="c1.h">Import document validation</h3>
+        <p class="ctx" data-i="c1.p">Import shipments come with paperwork from suppliers, shipping lines and government offices, and it all has to agree. I built a system that checks the documents against each other and against import quotas while they're still drafts.</p>
+        <ul data-i="c1.ul"><li>Configurable rule engine with warnings and suggestions</li><li>Quota tracking across revised approvals</li><li>Reading data straight from PDF documents</li></ul>
         <div class="stack"><span>Laravel</span><span>MySQL</span><span>JavaScript</span></div>
       </article>
 
       <article class="card reveal d1">
-        <span class="no">/02 · Human resources</span>
-        <h3>HR &amp; payroll platform</h3>
-        <p class="ctx">One HR system for several companies, branches and departments: attendance, leave, overtime, recruitment, letters and payroll. An API backend serves both a web dashboard and mobile clients.</p>
-        <ul>
-          <li>Multi-level approval workflows with delegation</li>
-          <li>Payroll with deductions, installments and locked periods</li>
-          <li>Recruitment pipeline with interview scheduling and notifications</li>
-        </ul>
+        <span class="no" data-i="c2.no">/02 · Human resources</span>
+        <h3 data-i="c2.h">HR &amp; payroll platform</h3>
+        <p class="ctx" data-i="c2.p">One HR system for several companies, branches and departments: attendance, leave, overtime, recruitment, letters and payroll. An API backend serves both a web dashboard and mobile clients.</p>
+        <ul data-i="c2.ul"><li>Multi-level approval workflows with delegation</li><li>Payroll with deductions, installments and locked periods</li><li>Recruitment pipeline with interview scheduling and notifications</li></ul>
         <div class="stack"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Sanctum</span></div>
       </article>
 
       <article class="card reveal">
-        <span class="no">/03 · Finance &amp; compliance reporting</span>
-        <h3>Reporting on top of an ERP</h3>
-        <p class="ctx">The business ran on an off-the-shelf ERP that couldn't produce the reports management needed. I worked out its undocumented database and built a reporting app across multiple companies.</p>
-        <ul>
-          <li>Reverse-engineering an unfamiliar database schema</li>
-          <li>Large exports streamed without running out of memory</li>
-          <li>Validating numbers with finance before going live</li>
-        </ul>
+        <span class="no" data-i="c3.no">/03 · Finance &amp; compliance reporting</span>
+        <h3 data-i="c3.h">Reporting on top of an ERP</h3>
+        <p class="ctx" data-i="c3.p">The business ran on an off-the-shelf ERP that couldn't produce the reports management needed. I worked out its undocumented database and built a reporting app across multiple companies.</p>
+        <ul data-i="c3.ul"><li>Reverse-engineering an unfamiliar database schema</li><li>Large exports streamed without running out of memory</li><li>Validating numbers with finance before going live</li></ul>
         <div class="stack"><span>Laravel</span><span>Inertia</span><span>Vue 3</span><span>MySQL</span></div>
       </article>
 
       <article class="card reveal d1">
-        <span class="no">/04 · Logistics</span>
-        <h3>Fleet operations platform</h3>
-        <p class="ctx">A system for running a trucking operation, with separate views for admins, management, drivers, technicians and customers.</p>
-        <ul>
-          <li>Operations dashboard: orders, fleet status, expiring vehicle documents</li>
-          <li>Role-based access with a full activity log</li>
-          <li>Bilingual interface and a phased roadmap toward a mobile app</li>
-        </ul>
+        <span class="no" data-i="c4.no">/04 · Logistics</span>
+        <h3 data-i="c4.h">Fleet operations platform</h3>
+        <p class="ctx" data-i="c4.p">A system for running a trucking operation, with separate views for admins, management, drivers, technicians and customers.</p>
+        <ul data-i="c4.ul"><li>Operations dashboard: orders, fleet status, expiring vehicle documents</li><li>Role-based access with a full activity log</li><li>Bilingual interface and a phased roadmap toward a mobile app</li></ul>
         <div class="stack"><span>Laravel</span><span>Vue 3 + TS</span><span>shadcn-vue</span><span>Pest</span></div>
       </article>
 
       <article class="card reveal">
-        <span class="no">/05 · Infrastructure</span>
-        <h3>Messaging API gateway</h3>
-        <p class="ctx">A single API that other applications call to send WhatsApp messages, designed so email and SMS can plug in the same way, with uptime monitoring for connected services.</p>
-        <ul>
-          <li>Per-client API keys with granular permissions</li>
-          <li>Queued, paced delivery to avoid spam flags</li>
-          <li>Request logging and service health checks</li>
-        </ul>
+        <span class="no" data-i="c5.no">/05 · Infrastructure</span>
+        <h3 data-i="c5.h">Messaging API gateway</h3>
+        <p class="ctx" data-i="c5.p">A single API that other applications call to send WhatsApp messages, designed so email and SMS can plug in the same way, with uptime monitoring for connected services.</p>
+        <ul data-i="c5.ul"><li>Per-client API keys with granular permissions</li><li>Queued, paced delivery to avoid spam flags</li><li>Request logging and service health checks</li></ul>
         <div class="stack"><span>Laravel</span><span>Queues</span><span>Vue 3</span></div>
       </article>
 
       <article class="card reveal d1">
-        <span class="no">/06 · Warehousing</span>
-        <h3>Real-time queue board</h3>
-        <p class="ctx">Warehouse staff manage the truck queue in a spreadsheet. This turns it into live screens for every warehouse and keeps the main system in sync.</p>
-        <ul>
-          <li>Live push updates to every screen</li>
-          <li>Debounced sync, so a burst of edits becomes one request</li>
-          <li>Separate mobile view for drivers</li>
-        </ul>
+        <span class="no" data-i="c6.no">/06 · Warehousing</span>
+        <h3 data-i="c6.h">Real-time queue board</h3>
+        <p class="ctx" data-i="c6.p">Warehouse staff manage the truck queue in a spreadsheet. This turns it into live screens for every warehouse and keeps the main system in sync.</p>
+        <ul data-i="c6.ul"><li>Live push updates to every screen</li><li>Debounced sync, so a burst of edits becomes one request</li><li>Separate mobile view for drivers</li></ul>
         <div class="stack"><span>Node.js</span><span>Express</span><span>Socket.io</span></div>
       </article>
 
-      <article class="card wide reveal">
-        <span class="no">/07 · Regulated integrations</span>
-        <h3>Payments, tax, e-signature and identity</h3>
-        <p class="ctx">Across several projects I've connected business systems to banks, payment providers, the tax system, certified e-signature providers and identity verification. In this kind of work a bug means lost money, an invalid contract or a failed audit, so I build it carefully.</p>
+      <article class="card wide reveal" id="integrations" style="scroll-margin-top:80px">
+        <span class="no" data-i="c7.no">/07 · Regulated integrations</span>
+        <h3 data-i="c7.h">Payments, tax, e-signature and identity</h3>
+        <p class="ctx" data-i="c7.p">Across several projects I've connected business systems to banks, payment providers, the tax system, certified e-signature providers and identity verification. In this kind of work a bug means lost money, an invalid contract or a failed audit, so I build it carefully.</p>
         <div class="tri">
-          <div><h4><i>H2H</i>Bank host-to-host</h4><p>Direct bank connections for transfers and status checks, with signed requests and reconciliation.</p></div>
-          <div><h4><i>PG</i>Payment gateways</h4><p>Payments and callbacks, with webhook verification and safe handling of duplicate notifications.</p></div>
-          <div><h4><i>TAX</i>Tax invoices</h4><p>Issuing VAT invoices (e-Faktur) through a third-party tax API, matched to sales data.</p></div>
-          <div><h4><i>SIGN</i>Digital signatures</h4><p>Legally valid e-signing flows with two major certified providers, Privy and Digisign.</p></div>
-          <div><h4><i>KYC</i>Identity verification</h4><p>Verifying people against national population registry (Dukcapil) data before onboarding.</p></div>
+          <div data-i="c7.a"><h4><i>H2H</i>Bank host-to-host</h4><p>Direct bank connections for transfers and status checks, with signed requests and reconciliation.</p></div>
+          <div data-i="c7.b"><h4><i>PG</i>Payment gateways</h4><p>Payments and callbacks, with webhook verification and safe handling of duplicate notifications.</p></div>
+          <div data-i="c7.c"><h4><i>TAX</i>Tax invoices</h4><p>Issuing VAT invoices (e-Faktur) through a third-party tax API, matched to sales data.</p></div>
+          <div data-i="c7.d"><h4><i>SIGN</i>Digital signatures</h4><p>Legally valid e-signing flows with two major certified providers, Privy and Digisign.</p></div>
+          <div data-i="c7.e"><h4><i>KYC</i>Identity verification</h4><p>Verifying people against national population registry (Dukcapil) data before onboarding.</p></div>
         </div>
         <div class="stack"><span>REST APIs</span><span>Signed requests</span><span>Webhooks</span><span>Idempotency</span><span>Reconciliation</span><span>KYC</span></div>
       </article>
@@ -503,55 +492,47 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section id="experience">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">03 — Experience</div>
+      <div class="eyebrow reveal" data-i="e.eb">03 — Experience</div>
       <div>
-        <h2 class="reveal">I've watched a company grow up, <em>and get acquired.</em></h2>
-        <p class="reveal d1">I didn't just read about these stages. I was on the team through each of them, and each one taught me something different about building software.</p>
+        <h2 class="reveal" data-i="e.h2">I've watched a company grow up, <em>and get acquired.</em></h2>
+        <p class="reveal d1" data-i="e.p">I didn't just read about these stages. I was on the team through each of them, and each one taught me something different about building software.</p>
       </div>
     </div>
 
     <div class="story" id="story">
       <i class="story-fill" id="storyFill"></i>
       <div class="chap reveal">
-        <div class="eyebrow">Early days</div>
-        <p>I joined when the team was small enough that <em>everyone did everything</em>: backend, deploys, the database, and talking to users when something broke.</p>
+        <div class="eyebrow" data-i="e.1e">Early days</div>
+        <p data-i="e.1p">I joined when the team was small enough that <em>everyone did everything</em>: backend, deploys, the database, and talking to users when something broke.</p>
       </div>
       <div class="chap reveal">
-        <div class="eyebrow">Scaling</div>
-        <p>I stayed as it grew into several teams, and learned the moment when <em>speed alone stops working</em> and reviews, conventions and documentation start carrying the weight.</p>
+        <div class="eyebrow" data-i="e.2e">Scaling</div>
+        <p data-i="e.2p">I stayed as it grew into several teams, and learned the moment when <em>speed alone stops working</em> and reviews, conventions and documentation start carrying the weight.</p>
       </div>
       <div class="chap reveal">
-        <div class="eyebrow">Due diligence &amp; acquisition</div>
-        <p>I went through due diligence, with outside eyes on our systems, data and documentation, and <em>saw the company acquired</em> by a larger one.</p>
+        <div class="eyebrow" data-i="e.3e">Due diligence &amp; acquisition</div>
+        <p data-i="e.3p">I went through due diligence, with outside eyes on our systems, data and documentation, and <em>saw the company acquired</em> by a larger one.</p>
       </div>
       <div class="chap reveal">
-        <div class="eyebrow">Corporate</div>
-        <p>Since then I've worked inside a corporate environment, where every change needs a sign-off and <em>compliance isn't optional.</em></p>
+        <div class="eyebrow" data-i="e.4e">Corporate</div>
+        <p data-i="e.4p">Since then I've worked inside a corporate environment, where every change needs a sign-off and <em>compliance isn't optional.</em></p>
       </div>
     </div>
 
     <div class="envs">
       <div class="env reveal">
         <div class="eyebrow">Startup</div>
-        <h3>A full, dedicated product team</h3>
-        <ul>
-          <li>Decisions made in a day, shipped in a week</li>
-          <li>Owning features end to end, from schema to release</li>
-          <li>Building structure while everything is moving</li>
-        </ul>
+        <h3 data-i="e.s.h">A full, dedicated product team</h3>
+        <ul data-i="e.s.ul"><li>Decisions made in a day, shipped in a week</li><li>Owning features end to end, from schema to release</li><li>Building structure while everything is moving</li></ul>
       </div>
       <div class="vs reveal d1">vs</div>
       <div class="env reveal d2">
-        <div class="eyebrow">Corporate</div>
-        <h3>Process, sign-offs and audit</h3>
-        <ul>
-          <li>Changes go through formal approval</li>
-          <li>Documentation and compliance aren't optional</li>
-          <li>Finance, HR and operations as daily stakeholders</li>
-        </ul>
+        <div class="eyebrow" data-i="e.c.e">Corporate</div>
+        <h3 data-i="e.c.h">Process, sign-offs and audit</h3>
+        <ul data-i="e.c.ul"><li>Changes go through formal approval</li><li>Documentation and compliance aren't optional</li><li>Finance, HR and operations as daily stakeholders</li></ul>
       </div>
     </div>
-    <p class="carry reveal">What I carry between them: I document like a corporation, and <em>ship like a startup.</em></p>
+    <p class="carry reveal" data-i="e.carry">What I carry between them: I document like a corporation, and <em>ship like a startup.</em></p>
   </div>
 </section>
 
@@ -559,40 +540,28 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section class="ai" id="ai">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">04 — How I work</div>
+      <div class="eyebrow reveal" data-i="a.eb">04 — How I work</div>
       <div>
-        <h2 class="reveal">Fast like vibe coding. <em>Reviewed like it's payroll.</em></h2>
-        <p class="reveal d1">Everything above was built with an AI coding agent as my daily pair. That's how one engineer covers this much ground. The speed comes from AI; the reason it doesn't fall apart comes from a few habits.</p>
+        <h2 class="reveal" data-i="a.h2">Fast like vibe coding. <em>Reviewed like it's payroll.</em></h2>
+        <p class="reveal d1" data-i="a.p">Everything above was built with an AI coding agent as my daily pair. That's how one engineer covers this much ground. The speed comes from AI; the reason it doesn't fall apart comes from a few habits.</p>
       </div>
     </div>
     <div class="split">
       <div class="col reveal">
-        <h3><i></i>AI drafts it</h3>
-        <ul>
-          <li>Scaffolding &amp; CRUD <span>controllers, requests, resources</span></li>
-          <li>Migrations &amp; seeders <span>from a schema I've designed</span></li>
-          <li>Exploring an unknown codebase <span>or an undocumented database</span></li>
-          <li>Refactors across many files <span>renames, extractions, upgrades</span></li>
-          <li>Clickable prototypes <span>to agree on a flow first</span></li>
-        </ul>
+        <h3 data-i="a.1h"><i></i>AI drafts it</h3>
+        <ul data-i="a.1ul"><li>Scaffolding &amp; CRUD <span>controllers, requests, resources</span></li><li>Migrations &amp; seeders <span>from a schema I've designed</span></li><li>Exploring an unknown codebase <span>or an undocumented database</span></li><li>Refactors across many files <span>renames, extractions, upgrades</span></li><li>Clickable prototypes <span>to agree on a flow first</span></li></ul>
       </div>
       <div class="col me-col reveal d1">
-        <h3><i></i>I decide it</h3>
-        <ul>
-          <li>The data model <span>and where tenant boundaries sit</span></li>
-          <li>Who can see and approve what <span>roles, scopes, policies</span></li>
-          <li>Anything touching salaries <span>calculations, locks, rounding</span></li>
-          <li>Whether the data can be trusted <span>validated against reality</span></li>
-          <li>What reaches production <span>every diff read before merge</span></li>
-        </ul>
+        <h3 data-i="a.2h"><i></i>I decide it</h3>
+        <ul data-i="a.2ul"><li>The data model <span>and where tenant boundaries sit</span></li><li>Who can see and approve what <span>roles, scopes, policies</span></li><li>Anything touching salaries <span>calculations, locks, rounding</span></li><li>Whether the data can be trusted <span>validated against reality</span></li><li>What reaches production <span>every diff read before merge</span></li></ul>
       </div>
     </div>
 
-    <div class="habits-h reveal">Three habits that keep it from turning into a mess</div>
+    <div class="habits-h reveal" data-i="a.hh">Three habits that keep it from turning into a mess</div>
     <div class="habits">
-      <div class="habit reveal"><div class="num">/a</div><h4>A design doc for every feature</h4><p>Why it exists, its limits, and the decisions behind it. Each moves <code>IDEATION → IN_DEV → PRODUCTION</code>. The AI reads it before touching code, so feature #40 still respects what was decided in feature #3.</p></div>
-      <div class="habit reveal d1"><div class="num">/b</div><h4>Every change goes through a visible diff</h4><p>No silent scripted rewrites, no history rewrites without me. If I can't review it line by line, it doesn't land.</p></div>
-      <div class="habit reveal d2"><div class="num">/c</div><h4>A monthly report in plain language</h4><p>What shipped, what it fixed, and who it helped, written for management rather than engineers. Being able to explain the work is part of the work.</p></div>
+      <div class="habit reveal" data-i="a.h1"><div class="num">/a</div><h4>A design doc for every feature</h4><p>Why it exists, its limits, and the decisions behind it. Each moves <code>IDEATION → IN_DEV → PRODUCTION</code>. The AI reads it before touching code, so feature #40 still respects what was decided in feature #3.</p></div>
+      <div class="habit reveal d1" data-i="a.h2b"><div class="num">/b</div><h4>Every change goes through a visible diff</h4><p>No silent scripted rewrites, no history rewrites without me. If I can't review it line by line, it doesn't land.</p></div>
+      <div class="habit reveal d2" data-i="a.h3"><div class="num">/c</div><h4>A monthly report in plain language</h4><p>What shipped, what it fixed, and who it helped, written for management rather than engineers. Being able to explain the work is part of the work.</p></div>
     </div>
   </div>
 </section>
@@ -601,14 +570,14 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section id="services">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">05 — Where I'm useful</div>
-      <div><h2 class="reveal">Hire me when the rules are <em>complicated</em> and the data actually matters.</h2></div>
+      <div class="eyebrow reveal" data-i="v.eb">05 — Where I'm useful</div>
+      <div><h2 class="reveal" data-i="v.h2">Hire me when the rules are <em>complicated</em> and the data actually matters.</h2></div>
     </div>
     <div class="svc">
-      <div class="svc-item reveal"><div class="num">/01</div><h3>Internal business systems</h3><p>HR, payroll, import, operations, anything with approvals and money moving through it. From the first schema to a deployed, documented system.</p></div>
-      <div class="svc-item reveal d1"><div class="num">/02</div><h3>Reports your ERP can't give you</h3><p>I'll dig through the database nobody documented, find where the real numbers live, and build reports finance can sign off on.</p></div>
-      <div class="svc-item reveal"><div class="num">/03</div><h3>Payments &amp; integrations</h3><p>Bank host-to-host, payment gateways, tax invoices, e-signatures, identity verification, WhatsApp. All behind clean interfaces with logging and reconciliation.</p></div>
-      <div class="svc-item reveal d1"><div class="num">/04</div><h3>Legacy Laravel rescue</h3><p>The app that grew faster than its architecture. I map it, document it, add tests where it hurts, then improve it without stopping the business.</p></div>
+      <div class="svc-item reveal" data-i="v.1"><div class="num">/01</div><h3>Internal business systems</h3><p>HR, payroll, import, operations, anything with approvals and money moving through it. From the first schema to a deployed, documented system.</p></div>
+      <div class="svc-item reveal d1" data-i="v.2"><div class="num">/02</div><h3>Reports your ERP can't give you</h3><p>I'll dig through the database nobody documented, find where the real numbers live, and build reports finance can sign off on.</p></div>
+      <div class="svc-item reveal" data-i="v.3"><div class="num">/03</div><h3>Payments &amp; integrations</h3><p>Bank host-to-host, payment gateways, tax invoices, e-signatures, identity verification, WhatsApp. All behind clean interfaces with logging and reconciliation.</p></div>
+      <div class="svc-item reveal d1" data-i="v.4"><div class="num">/04</div><h3>Legacy Laravel rescue</h3><p>The app that grew faster than its architecture. I map it, document it, add tests where it hurts, then improve it without stopping the business.</p></div>
     </div>
   </div>
 </section>
@@ -617,39 +586,21 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <section id="toolkit">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow reveal">06 — Toolkit</div>
-      <div><h2 class="reveal">What I bring to a team, <em>in plain words.</em></h2></div>
+      <div class="eyebrow reveal" data-i="t.eb">06 — Toolkit</div>
+      <div><h2 class="reveal" data-i="t.h2">What I bring to a team, <em>in plain words.</em></h2></div>
     </div>
     <div class="kit">
       <div class="kit-col reveal">
         <h3>Domain</h3>
-        <dl>
-          <div><dt>Workflow &amp; rule engines</dt><dd>Approvals, delegation, rules stored as data</dd></div>
-          <div><dt>Payroll &amp; HR compliance</dt><dd>Effective-dated schemes, social security, tax installments, period locks</dd></div>
-          <div><dt>Import &amp; customs documents</dt><dd>PI to PIB consistency, quotas, HS codes</dd></div>
-          <div><dt>ERP data extraction</dt><dd>Reverse-engineering schemas, validating numbers</dd></div>
-          <div><dt>Regulated integrations</dt><dd>Bank host-to-host, payment gateways, e-Faktur, e-signature, KYC</dd></div>
-        </dl>
+        <dl data-i="t.1"><div><dt>Workflow &amp; rule engines</dt><dd>Approvals, delegation, rules stored as data</dd></div><div><dt>Payroll &amp; HR compliance</dt><dd>Effective-dated schemes, social security, tax installments, period locks</dd></div><div><dt>Import &amp; customs documents</dt><dd>PI to PIB consistency, quotas, HS codes</dd></div><div><dt>ERP data extraction</dt><dd>Reverse-engineering schemas, validating numbers</dd></div><div><dt>Regulated integrations</dt><dd>Bank host-to-host, payment gateways, e-Faktur, e-signature, KYC</dd></div></dl>
       </div>
       <div class="kit-col reveal d1">
         <h3>Engineering</h3>
-        <dl>
-          <div><dt>API design</dt><dd>Strict contracts between separately deployed servers</dd></div>
-          <div><dt>Multi-tenant architecture</dt><dd>Company, branch and client isolation on shared infra</dd></div>
-          <div><dt>Access control</dt><dd>Roles, abilities and policies, tested as policy</dd></div>
-          <div><dt>Large data handling</dt><dd>Cursor exports, chunking, server-side search</dd></div>
-          <div><dt>Real-time &amp; queues</dt><dd>Socket.io, debounced sync, delayed jobs</dd></div>
-        </dl>
+        <dl data-i="t.2"><div><dt>API design</dt><dd>Strict contracts between separately deployed servers</dd></div><div><dt>Multi-tenant architecture</dt><dd>Company, branch and client isolation on shared infra</dd></div><div><dt>Access control</dt><dd>Roles, abilities and policies, tested as policy</dd></div><div><dt>Large data handling</dt><dd>Cursor exports, chunking, server-side search</dd></div><div><dt>Real-time &amp; queues</dt><dd>Socket.io, debounced sync, delayed jobs</dd></div></dl>
       </div>
       <div class="kit-col reveal d2">
         <h3>Delivery</h3>
-        <dl>
-          <div><dt>AI-assisted development</dt><dd>Used daily, with docs, diffs and tests as guardrails</dd></div>
-          <div><dt>Design docs &amp; roadmaps</dt><dd>Decisions written down so they outlive the chat</dd></div>
-          <div><dt>Prototype first</dt><dd>Clickable flows to agree before building</dd></div>
-          <div><dt>Production-safe changes</dt><dd>Non-breaking migrations on live payroll</dd></div>
-          <div><dt>Explaining to non-engineers</dt><dd>Reports management actually reads</dd></div>
-        </dl>
+        <dl data-i="t.3"><div><dt>AI-assisted development</dt><dd>Used daily, with docs, diffs and tests as guardrails</dd></div><div><dt>Design docs &amp; roadmaps</dt><dd>Decisions written down so they outlive the chat</dd></div><div><dt>Prototype first</dt><dd>Clickable flows to agree before building</dd></div><div><dt>Production-safe changes</dt><dd>Non-breaking migrations on live payroll</dd></div><div><dt>Explaining to non-engineers</dt><dd>Reports management actually reads</dd></div></dl>
       </div>
     </div>
     <div class="chips reveal">
@@ -661,8 +612,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <!-- ============ CONTACT ============ -->
 <section class="contact" id="contact">
   <div class="wrap">
-    <div class="eyebrow reveal">07 — Contact</div>
-    <h2 class="reveal" style="margin-top:22px">Got a system with<br>too many rules? <em>Tell me.</em></h2>
+    <div class="eyebrow reveal" data-i="k.eb">07 — Contact</div>
+    <h2 class="reveal" style="margin-top:22px" data-i="k.h2">Got a system with<br>too many rules? <em>Tell me.</em></h2>
     <div class="mail reveal d1">
       <a href="mailto:mohammadfr11@gmail.com">mohammadfr11@gmail.com</a>
       <button class="copy" id="copy" data-v="mohammadfr11@gmail.com">copy</button>
@@ -670,7 +621,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     <div class="contact-meta reveal d2">
       <a href="https://github.com/mfrlab" target="_blank" rel="noopener">GitHub ↗</a>
       <a href="https://www.linkedin.com/in/mfrozi/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <span>Open to remote contract &amp; full-time roles</span>
+      <span data-i="k.open">Open to remote contract &amp; full-time roles</span>
     </div>
   </div>
 </section>
@@ -678,7 +629,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 <footer>
   <div class="wrap">
     <span>© <span id="yr">2026</span> ozee</span>
-    <span>Designed by hand, built with AI, hosted on GitHub Pages.</span>
+    <span data-i="f.t">Designed by hand, built with AI, hosted on GitHub Pages.</span>
   </div>
 </footer>
 
@@ -688,6 +639,101 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const sleep = ms => new Promise(r => setTimeout(r, reduce ? Math.min(ms, 60) : ms));
   $('#yr').textContent = new Date().getFullYear();
+
+  /* ---------- Indonesian copy (English lives in the HTML) ---------- */
+  const ID = {
+    'n.demo': 'Demo', 'n.work': 'Proyek', 'n.exp': 'Pengalaman', 'n.how': 'Cara kerja', 'n.contact': 'Kontak',
+    'h.eb': '<b>●</b>&nbsp; Product Engineer · Spesialis Backend Sistem Bisnis',
+    'h.h1': 'Saya menangani bagian tersulit dari software: <em>aturan bisnisnya.</em>',
+    'h.lede': 'Gaji yang tidak boleh meleset sepeser pun. Transaksi yang harus klop dengan mutasi bank. Dokumen impor yang wajib sama sampai ke hurufnya. Laporan yang harus digali dari ERP tanpa dokumentasi. <strong>Saya merapikan aturan operasional yang berantakan menjadi sistem yang bisa diandalkan, dan mengerjakannya dengan cepat bersama AI.</strong>',
+    'h.cta1': 'Coba demonya <span class="arr">↓</span>', 'h.cta2': 'Lihat proyek',
+    'h.meta': '<span>Remote</span><span>Kontrak / full-time</span><span>Laravel · Vue · Node</span>',
+    'h.sf': '// simulasi, tapi setiap baris diambil dari sistem yang pernah saya bangun',
+    's.1s': 'demo', 's.1p': 'Rule engine yang bisa langsung dicoba di halaman ini, dengan tiga kasus nyata.', 's.1g': 'Coba sekarang ↓',
+    's.2s': 'proyek', 's.2p': 'Mulai dari HR, impor, laporan keuangan, logistik, messaging, sampai gudang.', 's.2g': 'Lihat proyek ↓',
+    's.3s': 'jenis integrasi', 's.3p': 'Bank host-to-host, payment gateway, faktur pajak, tanda tangan digital, dan KYC.', 's.3g': 'Lihat integrasi ↓',
+    's.4s': 'lingkungan kerja', 's.4p': 'Startup yang tumbuh sampai diakuisisi, dan korporasi dengan prosedur yang ketat.', 's.4g': 'Baca ceritanya ↓',
+    'd.eb': '01 — Coba langsung',
+    'd.h2': 'Empat dokumen dari empat pihak. <em>Salah satu huruf</em> saja, kontainer bisa tertahan di pelabuhan.',
+    'd.p': 'Setiap impor disertai surat persetujuan, invoice, packing list, dan bill of lading. Pembuatnya berbeda-beda, tapi isinya harus saling cocok. Saya membuat rule engine yang memeriksa semuanya sejak masih berupa draft. Di bawah ini versi mininya: pilih satu kasus, lalu jalankan.',
+    'd.t1': 'Dokumen rapi', 'd.t2': 'Cari salah ketiknya', 'd.t3': 'Kuota tidak cukup', 'd.rules': 'Pemeriksaan',
+    'd.note': 'Seluruh data di atas fiktif. Versi aslinya punya lebih banyak aturan yang bisa diubah tanpa deploy, lengkap dengan riwayat versi dokumen dan audit trail.',
+    'w.eb': '02 — Proyek pilihan',
+    'w.h2': 'Sistem yang dipakai bisnis setiap hari, di bidang yang <em>jarang dilirik developer.</em>',
+    'w.p': 'Berikut gambaran masalah yang diselesaikan tiap proyek, dan kemampuan yang dipakai untuk menyelesaikannya.',
+    'c1.no': '/01 · Impor &amp; kepabeanan', 'c1.h': 'Validasi dokumen impor',
+    'c1.p': 'Dokumen impor datang dari supplier, perusahaan pelayaran, dan instansi pemerintah, dan semuanya harus sinkron. Sistem ini mencocokkan dokumen satu sama lain sekaligus mengecek sisa kuota impor, sebelum semuanya final.',
+    'c1.ul': '<li>Rule engine yang bisa diatur, lengkap dengan peringatan dan saran perbaikan</li><li>Pelacakan kuota meski surat persetujuannya direvisi</li><li>Pengambilan data langsung dari file PDF</li>',
+    'c2.no': '/02 · SDM', 'c2.h': 'Platform HR &amp; payroll',
+    'c2.p': 'Satu sistem HR untuk banyak perusahaan, cabang, dan departemen. Isinya absensi, cuti, lembur, rekrutmen, surat-menyurat, sampai penggajian. Satu backend API melayani dashboard web dan aplikasi mobile sekaligus.',
+    'c2.ul': '<li>Approval bertingkat dengan fitur delegasi</li><li>Penggajian dengan potongan, cicilan, dan penguncian periode</li><li>Alur rekrutmen lengkap dengan jadwal interview dan notifikasi</li>',
+    'c3.no': '/03 · Laporan keuangan &amp; kepatuhan', 'c3.h': 'Laporan dari data ERP',
+    'c3.p': 'Perusahaan memakai ERP siap pakai yang tidak bisa mengeluarkan laporan yang diminta manajemen. Saya membongkar struktur database-nya yang tanpa dokumentasi, lalu membangun aplikasi laporan untuk beberapa perusahaan sekaligus.',
+    'c3.ul': '<li>Memetakan skema database yang sama sekali asing</li><li>Ekspor data besar tanpa membebani server</li><li>Mencocokkan angka dengan tim finance sebelum dirilis</li>',
+    'c4.no': '/04 · Logistik', 'c4.h': 'Platform operasional armada',
+    'c4.p': 'Sistem untuk mengelola bisnis trucking, dengan tampilan berbeda untuk admin, manajemen, driver, teknisi, dan pelanggan.',
+    'c4.ul': '<li>Dashboard operasional: order, kondisi armada, dokumen kendaraan yang hampir habis masa berlakunya</li><li>Hak akses per role dengan catatan aktivitas lengkap</li><li>Tampilan dua bahasa dan rencana bertahap menuju aplikasi mobile</li>',
+    'c5.no': '/05 · Infrastruktur', 'c5.h': 'Gateway pengiriman pesan',
+    'c5.p': 'Satu pintu API untuk semua aplikasi yang perlu mengirim pesan WhatsApp. Strukturnya disiapkan agar email dan SMS bisa menyusul dengan cara yang sama, dan dilengkapi pemantauan uptime layanan.',
+    'c5.ul': '<li>API key per aplikasi dengan izin yang bisa diatur detail</li><li>Pengiriman bertahap lewat antrean agar nomor tidak dianggap spam</li><li>Log setiap permintaan dan pengecekan kesehatan layanan</li>',
+    'c6.no': '/06 · Pergudangan', 'c6.h': 'Papan antrean real-time',
+    'c6.p': 'Petugas gudang mencatat antrean truk di spreadsheet. Sistem ini menampilkannya secara live di layar setiap gudang, sekaligus menyinkronkan datanya ke sistem utama.',
+    'c6.ul': '<li>Layar langsung ter-update begitu data berubah</li><li>Sinkronisasi pintar: puluhan perubahan beruntun cukup dikirim sekali</li><li>Tampilan khusus di HP untuk driver</li>',
+    'c7.no': '/07 · Integrasi teregulasi', 'c7.h': 'Pembayaran, pajak, tanda tangan digital, dan verifikasi identitas',
+    'c7.p': 'Di beberapa proyek, saya menghubungkan sistem bisnis dengan bank, payment gateway, sistem perpajakan, penyedia tanda tangan digital, dan layanan verifikasi identitas. Di area ini, satu bug bisa berujung pada uang yang hilang, kontrak yang tidak sah, atau temuan audit. Karena itu saya mengerjakannya dengan sangat hati-hati.',
+    'c7.a': '<h4><i>H2H</i>Bank host-to-host</h4><p>Terhubung langsung ke bank untuk transfer dan cek status, dengan request yang ditandatangani dan rekonsiliasi.</p>',
+    'c7.b': '<h4><i>PG</i>Payment gateway</h4><p>Pembuatan tagihan dan callback, dengan verifikasi webhook dan aman dari notifikasi ganda.</p>',
+    'c7.c': '<h4><i>TAX</i>Faktur pajak</h4><p>Penerbitan e-Faktur lewat API penyedia pihak ketiga, langsung dari data penjualan.</p>',
+    'c7.d': '<h4><i>SIGN</i>Tanda tangan digital</h4><p>Alur tanda tangan elektronik yang sah secara hukum, terintegrasi dengan Privy dan Digisign.</p>',
+    'c7.e': '<h4><i>KYC</i>Verifikasi identitas</h4><p>Pengecekan identitas ke data Dukcapil sebelum pengguna bisa mendaftar.</p>',
+    'e.eb': '03 — Pengalaman',
+    'e.h2': 'Saya ikut membesarkan perusahaan, <em>sampai diakuisisi.</em>',
+    'e.p': 'Saya mengalami sendiri setiap fasenya, dan tiap fase memberi pelajaran yang berbeda soal membangun software.',
+    'e.1e': 'Awal mula', 'e.1p': 'Saya bergabung saat timnya masih kecil, ketika <em>semua orang mengerjakan semuanya</em>: backend, deploy, database, sampai turun langsung saat user mengalami kendala.',
+    'e.2e': 'Masa tumbuh', 'e.2p': 'Tim terus bertambah hingga terbagi menjadi beberapa tim. Di sini saya belajar bahwa <em>cepat saja tidak cukup</em>. Code review, standar penulisan, dan dokumentasi mulai jadi penopang utama.',
+    'e.3e': 'Due diligence &amp; akuisisi', 'e.3p': 'Saya ikut melewati due diligence, saat sistem, data, dan dokumentasi kami diperiksa pihak luar, hingga akhirnya <em>perusahaan diakuisisi</em> oleh perusahaan yang lebih besar.',
+    'e.4e': 'Korporasi', 'e.4p': 'Setelah itu saya bekerja di lingkungan korporasi. Setiap perubahan butuh persetujuan, dan <em>kepatuhan adalah harga mati.</em>',
+    'e.s.h': 'Tim produk lengkap, fokus di satu produk',
+    'e.s.ul': '<li>Putuskan hari ini, rilis minggu ini</li><li>Pegang fitur dari desain database sampai rilis</li><li>Menata struktur sambil terus bergerak cepat</li>',
+    'e.c.e': 'Korporasi', 'e.c.h': 'Prosedur, persetujuan, dan audit',
+    'e.c.ul': '<li>Setiap perubahan lewat persetujuan resmi</li><li>Dokumentasi dan kepatuhan adalah kewajiban</li><li>Berurusan dengan finance, HR, dan operasional setiap hari</li>',
+    'e.carry': 'Yang saya bawa dari keduanya: <em>rapi seperti korporasi, gesit seperti startup.</em>',
+    'a.eb': '04 — Cara kerja',
+    'a.h2': 'Secepat vibe coding, <em>seteliti menghitung gaji.</em>',
+    'a.p': 'Semua proyek di atas saya kerjakan bersama AI coding agent setiap hari. Itulah yang membuat satu orang bisa menangani sebanyak ini. AI memberi kecepatan, tapi yang menjaga hasilnya tetap rapi adalah kebiasaan kerja.',
+    'a.1h': '<i></i>Bagian AI',
+    'a.1ul': '<li>Kerangka kode &amp; CRUD <span>controller, request, resource</span></li><li>Migration &amp; seeder <span>berdasarkan skema yang sudah saya rancang</span></li><li>Menelusuri kode atau database asing <span>termasuk yang tanpa dokumentasi</span></li><li>Refactor di banyak file <span>rename, pemecahan, upgrade</span></li><li>Prototipe yang bisa diklik <span>untuk menyepakati alur sejak awal</span></li>',
+    'a.2h': '<i></i>Bagian saya',
+    'a.2ul': '<li>Desain data <span>termasuk batas data antar perusahaan</span></li><li>Hak akses <span>siapa boleh melihat dan menyetujui apa</span></li><li>Semua yang menyangkut gaji <span>perhitungan, penguncian, pembulatan</span></li><li>Keabsahan data <span>dicek dengan kondisi di lapangan</span></li><li>Apa yang naik ke production <span>setiap perubahan saya baca dulu</span></li>',
+    'a.hh': 'Tiga kebiasaan yang menjaga semuanya tetap rapi',
+    'a.h1': '<div class="num">/a</div><h4>Setiap fitur punya design doc</h4><p>Isinya alasan fitur dibuat, batasannya, dan keputusan penting di baliknya. Statusnya berjalan <code>IDEATION → IN_DEV → PRODUCTION</code>. AI membacanya sebelum menyentuh kode, sehingga fitur ke-40 tetap sejalan dengan keputusan di fitur ke-3.</p>',
+    'a.h2b': '<div class="num">/b</div><h4>Semua perubahan harus bisa direview</h4><p>Tidak ada perubahan diam-diam lewat script, tidak ada history yang diubah tanpa sepengetahuan saya. Kalau tidak bisa saya cek baris per baris, perubahan itu tidak masuk.</p>',
+    'a.h3': '<div class="num">/c</div><h4>Laporan bulanan yang mudah dipahami</h4><p>Apa yang sudah rilis, masalah apa yang terselesaikan, dan siapa yang terbantu. Ditulis untuk manajemen, bukan untuk sesama engineer. Menurut saya, menjelaskan hasil kerja juga bagian dari pekerjaan.</p>',
+    'v.eb': '05 — Yang bisa saya bantu',
+    'v.h2': 'Cocok untuk bisnis dengan aturan yang <em>rumit</em> dan data yang tidak boleh salah.',
+    'v.1': '<div class="num">/01</div><h3>Sistem internal perusahaan</h3><p>HR, payroll, impor, operasional, atau apa pun yang melibatkan approval dan arus uang. Dari rancangan database sampai sistem berjalan dan terdokumentasi.</p>',
+    'v.2': '<div class="num">/02</div><h3>Laporan yang tidak tersedia di ERP</h3><p>Saya telusuri database yang tidak terdokumentasi, cari di mana angka sebenarnya tersimpan, lalu buat laporan yang bisa dipertanggungjawabkan ke tim finance.</p>',
+    'v.3': '<div class="num">/03</div><h3>Pembayaran &amp; integrasi</h3><p>Bank host-to-host, payment gateway, faktur pajak, tanda tangan digital, verifikasi identitas, hingga WhatsApp. Semua dikemas rapi, lengkap dengan log dan rekonsiliasi.</p>',
+    'v.4': '<div class="num">/04</div><h3>Membenahi aplikasi Laravel lama</h3><p>Untuk aplikasi yang tumbuh lebih cepat dari arsitekturnya. Saya petakan, dokumentasikan, tambahkan test di titik rawan, lalu perbaiki bertahap tanpa mengganggu operasional.</p>',
+    't.eb': '06 — Keahlian',
+    't.h2': 'Yang bisa saya bawa ke tim, <em>tanpa istilah berbelit.</em>',
+    't.1': '<div><dt>Workflow &amp; rule engine</dt><dd>Approval, delegasi, aturan yang bisa diubah tanpa mengubah kode</dd></div><div><dt>Payroll &amp; regulasi HR</dt><dd>Skema gaji per tanggal efektif, jaminan sosial, cicilan pajak, kunci periode</dd></div><div><dt>Dokumen impor &amp; kepabeanan</dt><dd>Konsistensi PI hingga PIB, kuota, HS code</dd></div><div><dt>Menggali data ERP</dt><dd>Memetakan skema, memvalidasi angka</dd></div><div><dt>Integrasi teregulasi</dt><dd>Bank H2H, payment gateway, e-Faktur, tanda tangan digital, KYC</dd></div>',
+    't.2': '<div><dt>Desain API</dt><dd>Kontrak yang konsisten antar server yang terpisah</dd></div><div><dt>Arsitektur multi-tenant</dt><dd>Data perusahaan, cabang, dan client tetap terpisah di satu infrastruktur</dd></div><div><dt>Hak akses</dt><dd>Role, ability, dan policy yang diuji otomatis</dd></div><div><dt>Data dalam jumlah besar</dt><dd>Ekspor bertahap, chunking, pencarian di sisi server</dd></div><div><dt>Real-time &amp; antrean</dt><dd>Socket.io, sinkronisasi dengan debounce, job terjadwal</dd></div>',
+    't.3': '<div><dt>Coding bersama AI</dt><dd>Setiap hari, dengan dokumentasi, review, dan test sebagai pengaman</dd></div><div><dt>Design doc &amp; roadmap</dt><dd>Keputusan dicatat supaya tidak hilang bersama obrolan</dd></div><div><dt>Prototipe lebih dulu</dt><dd>Alur disepakati sebelum mulai membangun</dd></div><div><dt>Perubahan tanpa mengganggu</dt><dd>Update sistem payroll yang sedang berjalan dengan aman</dd></div><div><dt>Menjelaskan ke orang non-teknis</dt><dd>Laporan yang benar-benar dibaca manajemen</dd></div>',
+    'k.eb': '07 — Kontak',
+    'k.h2': 'Sistem Anda penuh<br>aturan yang rumit? <em>Ayo ngobrol.</em>',
+    'k.open': 'Terbuka untuk kerja remote, kontrak maupun full-time',
+    'f.t': 'Dirancang sendiri, dibangun bersama AI, di-hosting di GitHub Pages.',
+  };
+
+  /* strings used by scripts */
+  const UI = {
+    en: { run: 'Run checks →', again: 'Run again ↻', checking: 'Checking…', checkingP: 'Reading four documents against each other.', notyet: 'Not checked yet.', copy: 'copy', copied: 'copied ✓', copyFail: 'select & copy' },
+    id: { run: 'Jalankan pemeriksaan →', again: 'Ulangi ↻', checking: 'Memeriksa…', checkingP: 'Mencocokkan keempat dokumen.', notyet: 'Belum diperiksa.', copy: 'salin', copied: 'tersalin ✓', copyFail: 'salin manual' }
+  };
+
+  let L = 'en';
+  const tr = v => (v && typeof v === 'object' && 'en' in v) ? v[L] : v;
 
   /* theme */
   const root = document.documentElement;
@@ -703,7 +749,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive: true });
 
   /* headline split */
-  $$('[data-split]').forEach(el => {
+  const split = el => {
     const nodes = [...el.childNodes]; el.textContent = ''; let i = 0;
     const wrap = n => { const w = document.createElement('span'); w.className = 'w';
       let inner = n; if (n.nodeType === 3) { inner = document.createElement('span'); inner.textContent = n.textContent; }
@@ -714,7 +760,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
         else el.appendChild(wrap(document.createTextNode(p)));
       }); else el.appendChild(wrap(n));
     });
-  });
+  };
 
   /* reveal + count */
   const io = new IntersectionObserver(es => es.forEach(e => {
@@ -725,6 +771,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
       requestAnimationFrame(tick);
     });
   }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  $$('.reveal').forEach(el => io.observe(el));
+
   /* experience timeline: line draws with scroll, chapters light up as it reaches them */
   const story = $('#story'), fill = $('#storyFill'), chaps = $$('.chap');
   const onStory = () => {
@@ -734,9 +782,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
     chaps.forEach(c => c.classList.toggle('lit', c.getBoundingClientRect().top < mark));
   };
   addEventListener('scroll', onStory, { passive: true }); addEventListener('resize', onStory); onStory();
-  $$('.reveal').forEach(el => io.observe(el));
 
-  /* hero event stream */
+  /* hero event stream (kept in English: it reads as a system log) */
   const events = [
     ['import','rule.fail','invoice total ≠ sum of lines','bad'],
     ['msg','message.queued','paced · delay 7s','info'],
@@ -772,86 +819,118 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
   /* ---------- rule engine demo ---------- */
   const SVG = `<svg class="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><svg class="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M12 5v9M12 19h.01"/></svg><svg class="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
   const CONS = 'PT Acme Logam Utama';
+  const b = (en, id) => ({ en, id });
   const base = () => ({
-    PI: { t: 'Import approval', s: 'PI · govt', f: { no: ['No.', 'PI-0001/2026'], hs: ['HS', '7208.39'], quota: ['Quota', '500,000 kg'], used: ['Used', '410,000 kg'] } },
-    CI: { t: 'Commercial invoice', s: 'CI · supplier', f: { cons: ['To', CONS], hs: ['HS', '7208.39'], l1: ['#1', '16,000 × 0.62 = 9,920.00'], l2: ['#2', '16,000 × 0.61 = 9,760.00'], l3: ['#3', '16,000 × 0.60 = 9,600.00'], total: ['Total', 'USD 29,280.00'] } },
-    PL: { t: 'Packing list', s: 'PL · supplier', f: { cons: ['To', CONS], net: ['Net', '48,000 kg'], gross: ['Gross', '48,620 kg'], pk: ['Packages', '24 coils'] } },
-    BL: { t: 'Bill of lading', s: 'BL · shipping line', f: { cons: ['To', CONS], gross: ['Gross', '48,620 kg'], ct: ['Containers', '2 × 20ft'], port: ['Discharge', 'Tanjung Priok'] } },
+    PI: { t: b('Import approval', 'Persetujuan impor'), s: b('PI · govt', 'PI · pemerintah'), f: { no: ['No.', 'PI-0001/2026'], hs: ['HS', '7208.39'], quota: [b('Quota', 'Kuota'), '500,000 kg'], used: [b('Used', 'Terpakai'), '410,000 kg'] } },
+    CI: { t: 'Commercial invoice', s: 'CI · supplier', f: { cons: [b('To', 'Kepada'), CONS], hs: ['HS', '7208.39'], l1: ['#1', '16,000 × 0.62 = 9,920.00'], l2: ['#2', '16,000 × 0.61 = 9,760.00'], l3: ['#3', '16,000 × 0.60 = 9,600.00'], total: ['Total', 'USD 29,280.00'] } },
+    PL: { t: 'Packing list', s: 'PL · supplier', f: { cons: [b('To', 'Kepada'), CONS], net: [b('Net', 'Neto'), '48,000 kg'], gross: [b('Gross', 'Bruto'), '48,620 kg'], pk: [b('Packages', 'Kemasan'), b('24 coils', '24 gulungan')] } },
+    BL: { t: 'Bill of lading', s: b('BL · shipping line', 'BL · pelayaran'), f: { cons: [b('To', 'Kepada'), CONS], gross: [b('Gross', 'Bruto'), '48,620 kg'], ct: [b('Containers', 'Kontainer'), '2 × 20ft'], port: [b('Discharge', 'Bongkar'), 'Tanjung Priok'] } },
   });
   const RULES = [
-    { t: 'Consignee identical, letter by letter', fs: ['CI.cons', 'PL.cons', 'BL.cons'] },
-    { t: 'Each line: qty × price = amount', fs: ['CI.l1', 'CI.l2', 'CI.l3'] },
-    { t: 'Sum of lines = invoice total', fs: ['CI.l1', 'CI.l2', 'CI.l3', 'CI.total'] },
-    { t: 'Gross weight agrees, PL ↔ BL', fs: ['PL.gross', 'BL.gross'] },
-    { t: 'HS code matches the approval', fs: ['PI.hs', 'CI.hs'] },
-    { t: 'Quota left covers this shipment', fs: ['PI.quota', 'PI.used', 'PL.net'] },
+    { t: b('Consignee identical, letter by letter', 'Nama penerima sama persis'), fs: ['CI.cons', 'PL.cons', 'BL.cons'] },
+    { t: b('Each line: qty × price = amount', 'Qty × harga sesuai di tiap baris'), fs: ['CI.l1', 'CI.l2', 'CI.l3'] },
+    { t: b('Sum of lines = invoice total', 'Total baris sama dengan total invoice'), fs: ['CI.l1', 'CI.l2', 'CI.l3', 'CI.total'] },
+    { t: b('Gross weight agrees, PL ↔ BL', 'Berat bruto PL dan BL sama'), fs: ['PL.gross', 'BL.gross'] },
+    { t: b('HS code matches the approval', 'HS code sesuai surat persetujuan'), fs: ['PI.hs', 'CI.hs'] },
+    { t: b('Quota left covers this shipment', 'Sisa kuota masih cukup'), fs: ['PI.quota', 'PI.used', 'PL.net'] },
   ];
-  const P = m => ({ s: 'pass', m });
+  const P = (en, id) => ({ s: 'pass', m: b(en, id) });
+  const OK = [
+    P('identical in 3 documents', 'sama di ketiga dokumen'), P('3 of 3 lines correct', 'ketiga baris benar'),
+    P('29,280.00 = 29,280.00', '29,280.00 = 29,280.00'), P('48,620 kg in both', 'sama-sama 48,620 kg'),
+    P('7208.39 in both', 'sama-sama 7208.39'), P('90,000 kg left · needs 48,000', 'sisa 90.000 kg, butuh 48.000 kg')
+  ];
   const SC = {
     clean: {
-      desc: '<b>Everything lines up.</b> This is what most shipments look like. The engine should stay out of the way.',
+      desc: b('<b>Everything lines up.</b> This is what most shipments look like. The engine should stay out of the way.',
+              '<b>Semua dokumen cocok.</b> Kebanyakan pengiriman memang seperti ini, dan sistem cukup memberi lampu hijau.'),
       patch: {},
-      res: [P('identical in 3 documents'), P('3 of 3 lines correct'), P('29,280.00 = 29,280.00'), P('48,620 kg in both'), P('7208.39 in both'), P('90,000 kg left · needs 48,000')],
-      end: ['ok', 'Ready to promote', 'All 6 rules pass. The set can move to the final import record.']
+      res: OK,
+      end: ['ok', b('Ready to promote', 'Siap difinalkan'), b('All 6 rules pass. The set can move to the final import record.', 'Keenam pemeriksaan lolos. Dokumen bisa dipindahkan ke data impor final.')]
     },
     typo: {
-      desc: '<b>Two small mistakes are hidden in these papers.</b> Try to find them yourself before you press run.',
+      desc: b('<b>Two small mistakes are hidden in these papers.</b> Try to find them yourself before you press run.',
+              '<b>Ada dua kesalahan kecil di dokumen ini.</b> Coba cari sendiri dulu sebelum menekan tombol.'),
       patch: { 'BL.cons': 'PT Acme Logam Utarna', 'CI.total': 'USD 29,820.00' },
-      res: [{ s: 'warn', m: 'BL says "Utarna", others "Utama"', flag: ['BL.cons'], lv: 'warn' }, P('3 of 3 lines correct'),
-            { s: 'fail', m: 'lines sum 29,280.00 · stated 29,820.00', flag: ['CI.total'], lv: 'bad' }, P('48,620 kg in both'), P('7208.39 in both'), P('90,000 kg left · needs 48,000')],
-      end: ['bad', 'Held · 2 issues', 'A transposed total and an "rn" that should be an "m". Both pass a quick human read.']
+      res: [{ s: 'warn', m: b('BL says "Utarna", others "Utama"', 'di BL tertulis "Utarna", bukan "Utama"'), flag: ['BL.cons'], lv: 'warn' }, OK[1],
+            { s: 'fail', m: b('lines sum 29,280.00 · stated 29,820.00', 'hasil hitung 29,280.00, tertulis 29,820.00'), flag: ['CI.total'], lv: 'bad' }, OK[3], OK[4], OK[5]],
+      end: ['bad', b('Held · 2 issues', 'Ditahan · 2 temuan'), b('A transposed total and an "rn" that should be an "m". Both pass a quick human read.', 'Angka total yang tertukar, dan huruf "rn" yang seharusnya "m". Keduanya mudah terlewat kalau dibaca sekilas.')]
     },
     quota: {
-      desc: '<b>The papers are perfect.</b> The problem is what came before: earlier shipments already used most of the approved quota.',
+      desc: b('<b>The papers are perfect.</b> The problem is what came before: earlier shipments already used most of the approved quota.',
+              '<b>Dokumennya sudah benar semua.</b> Masalahnya, kuota sudah banyak terpakai oleh pengiriman sebelumnya.'),
       patch: { 'PI.used': '470,000 kg' },
-      res: [P('identical in 3 documents'), P('3 of 3 lines correct'), P('29,280.00 = 29,280.00'), P('48,620 kg in both'), P('7208.39 in both'),
-            { s: 'fail', m: 'needs 48,000 kg · only 30,000 left', flag: ['PI.used', 'PL.net'], lv: 'bad' }],
-      end: ['bad', 'Blocked · over quota', 'This shipment would exceed the approval by 18,000 kg. Caught while it was still a draft.']
+      res: [OK[0], OK[1], OK[2], OK[3], OK[4],
+            { s: 'fail', m: b('needs 48,000 kg · only 30,000 left', 'butuh 48.000 kg, sisa hanya 30.000 kg'), flag: ['PI.used', 'PL.net'], lv: 'bad' }],
+      end: ['bad', b('Blocked · over quota', 'Diblokir · kuota kurang'), b('This shipment would exceed the approval by 18,000 kg. Caught while it was still a draft.', 'Pengiriman ini melebihi kuota sebanyak 18.000 kg, dan sudah ketahuan sebelum dokumennya final.')]
     }
   };
 
   const docsEl = $('#docs'), rulesEl = $('#rules'), verdict = $('#verdict'), run = $('#run'), tabs = $$('.tab');
   let cur = 'clean', busy = false;
   const fld = id => docsEl.querySelector(`[data-f="${id}"]`);
+  const setVerdict = (c, big, p) => { verdict.className = 'verdict ' + c; verdict.querySelector('.big').textContent = tr(big); verdict.querySelector('p').textContent = tr(p); };
   const render = () => {
-    const d = base(); Object.entries(SC[cur].patch).forEach(([k, v]) => { const [a, b] = k.split('.'); d[a].f[b][1] = v; });
+    const d = base(); Object.entries(SC[cur].patch).forEach(([k, v]) => { const [x, y] = k.split('.'); d[x].f[y][1] = v; });
     docsEl.innerHTML = Object.entries(d).map(([key, doc]) =>
-      `<div class="doc"><h4>${doc.t}<span>${doc.s}</span></h4>${Object.entries(doc.f).map(([fk, [l, v]]) =>
-        `<div class="f" data-f="${key}.${fk}"><span>${l}</span><span>${v}</span></div>`).join('')}</div>`).join('');
-    rulesEl.innerHTML = RULES.map(r => `<div class="rule"><span class="ic">${SVG}</span><div><div class="rt">${r.t}</div><div class="rm"></div></div></div>`).join('');
-    setVerdict('', '—', 'Not checked yet.');
+      `<div class="doc"><h4>${tr(doc.t)}<span>${tr(doc.s)}</span></h4>${Object.entries(doc.f).map(([fk, [l, v]]) =>
+        `<div class="f" data-f="${key}.${fk}"><span>${tr(l)}</span><span>${tr(v)}</span></div>`).join('')}</div>`).join('');
+    rulesEl.innerHTML = RULES.map(r => `<div class="rule"><span class="ic">${SVG}</span><div><div class="rt">${tr(r.t)}</div><div class="rm"></div></div></div>`).join('');
+    setVerdict('', '—', UI[L].notyet);
   };
-  const setVerdict = (c, b, p) => { verdict.className = 'verdict ' + c; verdict.querySelector('.big').textContent = b; verdict.querySelector('p').textContent = p; };
-  const pick = s => { cur = s; tabs.forEach(t => t.setAttribute('aria-pressed', t.dataset.s === s)); $('#desc').innerHTML = SC[s].desc; render(); run.textContent = 'Run checks →'; };
+  const pick = s => { cur = s; tabs.forEach(t => t.setAttribute('aria-pressed', t.dataset.s === s)); $('#desc').innerHTML = tr(SC[s].desc); render(); run.textContent = UI[L].run; };
   tabs.forEach(t => t.addEventListener('click', () => !busy && pick(t.dataset.s)));
 
   run.addEventListener('click', async () => {
     if (busy) return; busy = true; render();
-    run.disabled = true; tabs.forEach(t => t.disabled = true);
-    setVerdict('wait', 'Checking…', 'Reading four documents against each other.');
+    run.disabled = true; tabs.forEach(t => t.disabled = true); langBtn.disabled = true;
+    setVerdict('wait', UI[L].checking, UI[L].checkingP);
     const rows = $$('#rules .rule'), res = SC[cur].res;
     for (let i = 0; i < RULES.length; i++) {
       const row = rows[i], fs = RULES[i].fs.map(fld);
       row.className = 'rule run'; fs.forEach(f => f.classList.add('scan'));
       await sleep(750);
       fs.forEach(f => f.classList.remove('scan'));
-      row.className = 'rule ' + res[i].s; row.querySelector('.rm').textContent = res[i].m;
+      row.className = 'rule ' + res[i].s; row.querySelector('.rm').textContent = tr(res[i].m);
       (res[i].flag || []).forEach(id => fld(id).classList.add(res[i].lv));
       await sleep(180);
     }
     await sleep(300);
     setVerdict(...SC[cur].end);
-    run.textContent = 'Run again ↻'; run.disabled = false; tabs.forEach(t => t.disabled = false); busy = false;
+    run.textContent = UI[L].again; run.disabled = false; tabs.forEach(t => t.disabled = false); langBtn.disabled = false; busy = false;
   });
-  pick('clean');
+
+  /* ---------- language ---------- */
+  const EN = {};
+  const i18nEls = $$('[data-i]');
+  i18nEls.forEach(el => { EN[el.dataset.i] = el.innerHTML; });
+  const langBtn = $('#lang');
+  const applyLang = (l, animate) => {
+    L = l; root.lang = l;
+    i18nEls.forEach(el => {
+      const v = l === 'id' ? (ID[el.dataset.i] ?? EN[el.dataset.i]) : EN[el.dataset.i];
+      el.innerHTML = v;
+      if (el.hasAttribute('data-split')) split(el);
+      else if (animate && !reduce) el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 450, easing: 'ease-out' });
+    });
+    langBtn.querySelectorAll('span').forEach(s => s.classList.toggle('on', s.dataset.l === l));
+    copy.textContent = UI[l].copy;
+    pick(cur);
+    try { localStorage.setItem('lang', l); } catch (e) {}
+  };
+  langBtn.addEventListener('click', () => { if (!busy) applyLang(L === 'en' ? 'id' : 'en', true); });
 
   /* copy email */
   const copy = $('#copy');
   copy.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(copy.dataset.v); copy.textContent = 'copied ✓'; copy.classList.add('done'); }
-    catch (e) { copy.textContent = 'select & copy'; }
-    setTimeout(() => { copy.textContent = 'copy'; copy.classList.remove('done'); }, 1800);
+    try { await navigator.clipboard.writeText(copy.dataset.v); copy.textContent = UI[L].copied; copy.classList.add('done'); }
+    catch (e) { copy.textContent = UI[L].copyFail; }
+    setTimeout(() => { copy.textContent = UI[L].copy; copy.classList.remove('done'); }, 1800);
   });
+
+  let start = 'en';
+  try { start = localStorage.getItem('lang') === 'id' ? 'id' : 'en'; } catch (e) {}
+  applyLang(start, false);
 })();
 </script>
 </body>
